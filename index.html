@@ -638,6 +638,96 @@
   #tab-budget #thai-forecast-panel .thai-forecast-row { padding:.7rem .75rem; }
 }
 .thai-activity-cost{margin:.35rem 0 0;font-size:.75rem;font-weight:650;color:#287665;line-height:1.35}.dark .thai-activity-cost{color:#99e2d0}
+        
+/* NOTE - Riordino e spaziature */
+
+#notes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.thai-note-card {
+    margin: 0 !important;
+    min-width: 0;
+}
+
+.note-drag-handle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 30px;
+    height: 38px;
+    border-radius: 8px;
+    color: #477f8a;
+    font-size: 20px;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+}
+
+.note-drag-handle:active {
+    cursor: grabbing;
+}
+
+.dark .note-drag-handle {
+    color: #9bd5d9;
+}
+
+.thai-note-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 4px;
+}
+
+.thai-note-order-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 34px;
+    min-height: 38px;
+    border-radius: 9px;
+    background: #d9eeef;
+    border: 1px solid #a9d3d7;
+    color: #245c66;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.dark .thai-note-order-btn {
+    background: #2c5360;
+    border-color: #608995;
+    color: #e6f8fa;
+}
+
+.thai-note-order-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* Mobile */
+
+@media (max-width: 480px) {
+    .thai-note-card {
+        padding: 10px !important;
+    }
+
+    .thai-note-card > div:first-child {
+        flex-wrap: wrap;
+    }
+
+    .note-drag-handle {
+        width: 24px;
+    }
+
+    .thai-note-order-btn {
+        width: 31px;
+        min-height: 36px;
+    }
+}
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200" onload="initApp()">
@@ -1662,14 +1752,94 @@
               <button type="button" class="thai-todo-action danger" onclick="deleteTodo(${i})" title="Elimina" aria-label="Elimina To Do">🗑️</button>
             </div>`).join('')||'<p class="text-sm opacity-75 p-3">Nessuna attività da fare. Aggiungi la prima!</p>';
         }
-        function renderNotes(){
-            document.getElementById('notes-container').innerHTML=(tripData.notes||[]).map((n,i)=>{
-                const url=thaiUrl(n.link);
-                const shown=String(n.link||'').trim();
-                const linked=url?`<a href="${thaiEsc(url)}" target="_blank" rel="noopener noreferrer" class="text-brand-600 dark:text-teal-200 underline break-all inline-block py-1" title="Apri il collegamento esterno">${thaiEsc(shown)} <span aria-hidden="true">↗</span></a>`:'';
-                return `<article class="bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-900 rounded-xl p-3 text-sm space-y-2"><div class="flex items-start justify-between gap-3"><strong class="min-w-0 text-sky-900 dark:text-sky-100 font-bold break-words">${thaiEsc(n.title||'Nota')}</strong><span class="flex gap-1 shrink-0">${thaiBtn('✏️',`openNoteModal(${i})`)}${thaiBtn('🗑️',`deleteNote(${i})`)}</span></div>${n.text?`<p class="whitespace-pre-wrap break-words text-slate-800 dark:text-slate-100">${thaiEsc(n.text)}</p>`:''}${linked}</article>`;
-            }).join('')||'<p class="text-sm text-slate-400">Nessuna nota.</p>';
-        }
+        
+function renderNotes() {
+    const container = document.getElementById('notes-container');
+    if (!container) return;
+
+    const notes = tripData.notes || [];
+
+    container.innerHTML = notes.map((n, i) => {
+        const url = thaiUrl(n.link);
+        const shown = String(n.link || '').trim();
+
+        const linked = url
+            ? `<a href="${thaiEsc(url)}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-brand-600 dark:text-teal-200 underline break-all inline-block py-1"
+                  title="Apri il collegamento esterno">
+                  ${thaiEsc(shown)} ↗
+               </a>`
+            : '';
+
+        return `
+          <article class="thai-note-card bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-900 rounded-xl p-3 text-sm space-y-2">
+
+            <div class="flex items-start gap-2">
+
+              <span class="note-drag-handle"
+                    title="Trascina per riordinare"
+                    aria-label="Trascina per riordinare">
+                ☷
+              </span>
+
+              <strong class="flex-1 min-w-0 text-sky-900 dark:text-sky-100 font-bold break-words">
+                ${thaiEsc(n.title || 'Nota')}
+              </strong>
+
+              <div class="thai-note-actions flex gap-1 shrink-0">
+
+                <button type="button"
+                        class="thai-note-order-btn"
+                        onclick="thaiMoveNote(${i}, -1)"
+                        ${i === 0 ? 'disabled' : ''}
+                        title="Sposta in alto"
+                        aria-label="Sposta nota in alto">
+                  ↑
+                </button>
+
+                <button type="button"
+                        class="thai-note-order-btn"
+                        onclick="thaiMoveNote(${i}, 1)"
+                        ${i === notes.length - 1 ? 'disabled' : ''}
+                        title="Sposta in basso"
+                        aria-label="Sposta nota in basso">
+                  ↓
+                </button>
+
+                ${thaiBtn('✏️', `openNoteModal(${i})`)}
+                ${thaiBtn('🗑️', `deleteNote(${i})`)}
+
+              </div>
+            </div>
+
+            ${n.text
+                ? `<p class="whitespace-pre-wrap break-words text-slate-800 dark:text-slate-100">${thaiEsc(n.text)}</p>`
+                : ''}
+
+            ${linked}
+
+          </article>
+        `;
+    }).join('') || '<p class="text-sm text-slate-400">Nessuna nota.</p>';
+}
+        
+function thaiMoveNote(index, direction) {
+    const notes = tripData.notes || [];
+    const target = index + direction;
+
+    if (index < 0 || target < 0 || target >= notes.length) {
+        return;
+    }
+
+    const moved = notes.splice(index, 1)[0];
+    notes.splice(target, 0, moved);
+
+    saveDataToSheet();
+    renderApp();
+}
+
         function thaiExpenseIcon(category){
             return ({'Hotel':'🏨','Cibo':'🍜','Trasporti':'🚆','Attività':'🎟️','Shopping':'🛍️','Altro':'🧾'})[category||'Altro'] || '🧾';
         }
@@ -1811,7 +1981,7 @@
             saveDataToSheet();renderApp();
         }
         function renderApp(){renderItinerary();renderBudget();renderTodos();renderNotes();thaiRenderFlights();thaiRenderToday();initDragAndDrop();thaiInstallFolds();}
-        let thaiSortable, thaiTodoSortable;
+        let thaiSortable, thaiTodoSortable, thaiNotesSortable;
         function initDragAndDrop(){
             if(!window.Sortable)return;
             const el=document.getElementById('days-container');
@@ -1828,6 +1998,40 @@
                 const moved=tripData.todos.splice(evt.oldIndex,1)[0];tripData.todos.splice(evt.newIndex,0,moved);
                 saveDataToSheet();renderApp();
             }});
+            
+const notesContainer = document.getElementById('notes-container');
+
+if (thaiNotesSortable) {
+    thaiNotesSortable.destroy();
+    thaiNotesSortable = null;
+}
+
+if (notesContainer) {
+    thaiNotesSortable = new Sortable(notesContainer, {
+        draggable: '.thai-note-card',
+        handle: '.note-drag-handle',
+        animation: 150,
+        delayOnTouchOnly: true,
+        delay: 120,
+        touchStartThreshold: 5,
+
+        onEnd: evt => {
+            if (
+                evt.oldIndex === evt.newIndex ||
+                evt.oldIndex == null ||
+                evt.newIndex == null
+            ) {
+                return;
+            }
+
+            const moved = tripData.notes.splice(evt.oldIndex, 1)[0];
+            tripData.notes.splice(evt.newIndex, 0, moved);
+
+            saveDataToSheet();
+            renderApp();
+        }
+    });
+}
         }
         async function exportJSONData(){
             const raw=JSON.stringify(tripData,null,2);
