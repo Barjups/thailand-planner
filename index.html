@@ -1560,7 +1560,6 @@
                 day.cancellation=data.cancellation || '';
                 day.link=data.link || '';
                 thaiHotelForecastSync(day.hotel, day, dayIndex);
-            }
             } else if(kind==='todo') {
                 if(itemIndex>=0) tripData.todos[itemIndex]={...tripData.todos[itemIndex],...data}; else tripData.todos.push({...data,done:false});
             } else if(kind==='note') {
@@ -1576,7 +1575,7 @@
             const day = tripData.days[dayIndex];
             if (!day) return;
             if (!confirm('Eliminare l’hotel da questa giornata? Verranno rimossi anche il link di prenotazione e le condizioni di cancellazione associate. Le altre informazioni non saranno modificate.')) return;
-            thaiRemoveHotelForecast(day.hotel); // <-- Aggiunto qui
+            thaiRemoveHotelForecast(day.hotel);
             delete day.hotel;
             delete day.hotel_status;
             delete day.cancellation;
