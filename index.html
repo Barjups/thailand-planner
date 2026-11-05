@@ -49,6 +49,8 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .drag-handle { cursor: grab; touch-action: none; }
         .drag-handle:active { cursor: grabbing; }
+        .activity-drag-handle { cursor: grab; touch-action: none; user-select: none; }
+        .activity-drag-handle:active { cursor: grabbing; }
         .thai-modal-panel { max-height: 88dvh; overflow-y: auto; }
         .thai-field { width:100%; background:transparent; border:1px solid #cbd5e1; border-radius:0.75rem; padding:0.65rem; font-size:0.875rem; }
         .dark .thai-field { border-color:#475569; color:#f1f5f9; background:#19333d; }
@@ -1687,7 +1689,12 @@
             if(!tripData.days.length){el.innerHTML='<p class="text-sm">Aggiungi una giornata per iniziare a pianificare.</p>';return;}
             if(thaiSummaryDay>=tripData.days.length)thaiSummaryDay=0;
             const d=tripData.days[thaiSummaryDay];
-            const acts=(d.activities||[]).slice().sort((a,b)=>(a.start||'99:99').localeCompare(b.start||'99:99'));
+            const acts=(d.activities||[]).map((a,j)=>({a,j})).sort((x,y)=>{
+                if(x.a.start && y.a.start && x.a.start !== y.a.start){ return x.a.start.localeCompare(y.a.start); }
+                if(x.a.start && !y.a.start) return -1;
+                if(!x.a.start && y.a.start) return 1;
+                return (x.a.order ?? x.j) - (y.a.order ?? y.j);
+            }).map(item=>item.a);
             el.innerHTML=`<div class="flex flex-wrap items-center justify-between gap-2"><h3 class="font-bold text-sm">📍 Riepilogo della giornata</h3><select aria-label="Seleziona giornata" onchange="thaiSummaryDay=Number(this.value);thaiRenderSummary()" class="bg-white dark:bg-slate-700 border rounded-lg p-1.5 text-xs">${tripData.days.map((x,i)=>`<option value="${i}" ${i===thaiSummaryDay?'selected':''}>${thaiEsc(x.date||'Giorno '+x.id)} — ${thaiEsc(x.title||'Tappa')}</option>`).join('')}</select></div>
             <div class="mt-2 text-xs space-y-1"><p>🏨 ${thaiEsc(d.hotel?.name||thaiHotelStayForDay(thaiSummaryDay)?.hotel?.name||d.hotel_status||'Hotel non inserito')}</p><p>🚆 ${(d.transports||[]).length} spostamenti · 🗓️ ${acts.length} attività</p>${acts.length?acts.map(a=>`<p>• ${thaiEsc(a.start||'—')} ${thaiEsc(a.title||a.desc||'Attività')}</p>`).join(''):'<p>Nessuna attività in programma.</p>'}</div>`;
         }
@@ -1696,13 +1703,18 @@
             const el=document.getElementById('days-container');
             if(!tripData.days.length){el.innerHTML='<div class="p-4 bg-sky-50 text-sky-800 rounded-xl text-sm">Nessuna giornata presente. Usa “Aggiungi Giorno”.</div>';return;}
             el.innerHTML=tripData.days.map((d,i)=>{
-                const activities=(d.activities||[]).map((a,j)=>({a,j})).sort((x,y)=>(x.a.start||'99:99').localeCompare(y.a.start||'99:99'));
+                const activities=(d.activities||[]).map((a,j)=>({a,j})).sort((x,y)=>{
+                    if(x.a.start && y.a.start && x.a.start !== y.a.start){ return x.a.start.localeCompare(y.a.start); }
+                    if(x.a.start && !y.a.start) return -1;
+                    if(!x.a.start && y.a.start) return 1;
+                    return (x.a.order ?? x.j) - (y.a.order ?? y.j);
+                });
                 const transport=(d.transports||[]);
                 const hotel=d.hotel;
                 const linkedStays=thaiHotelStaysForDay(i).filter(stay=>stay.sourceIndex!==i);
                 const checkoutStays=linkedStays.filter(stay=>stay.checkout);
                 const otherStays=linkedStays.filter(stay=>!stay.checkout);
-                return `<article class="day-card bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+                return `<article class="day-card bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm space-y-3" data-day-index="${i}">
                   <div class="flex justify-between items-start gap-2"><div class="flex gap-2 items-start"><span class="day-drag-handle cursor-grab p-1 text-slate-400">☷</span><div><p class="text-[11px] font-bold text-brand-600">GIORNO ${thaiEsc(d.id)} · ${thaiEsc(d.date||'')}</p><h3 class="font-bold">${thaiEsc(d.title||'Tappa')}</h3></div></div><div class="flex gap-2">${thaiBtn('✏️',`openDayModal(${i})`)}${thaiBtn('🗑️',`deleteDay(${i})`)}</div></div>
                   <div class="flex flex-wrap gap-2">${thaiBtn(hotel || d.link || d.cancellation || d.hotel_status === 'Prenotato' ? '🏨 Gestisci hotel' : '🏨 Aggiungi hotel',`openHotelModal(${i})`)}${thaiBtn('🛫 Aggiungi volo interno',`thaiEditFlight(-1,${i})`)}${thaiBtn('🚆 Aggiungi spostamento',`openTransportModal(${i})`)}${thaiBtn('+ Aggiungi attività',`openActivityModal(${i})`)}</div>
                   ${thaiDomesticForDay(i)}${checkoutStays.map(stay=>thaiSharedHotelCard(stay,d.date)).join('')}
@@ -1713,9 +1725,9 @@
                   ${d.cost?`<div class="thai-legacy text-xs"><div class="flex flex-wrap items-center justify-between gap-2"><b>💶 Importo del vecchio itinerario: ${thaiEsc(d.cost)}</b><div class="flex gap-1">${thaiBtn('✏️ Modifica',`openDayModal(${i})`)}${thaiBtn('Rimuovi',`thaiClearLegacy(${i},'cost')`)}</div></div><p class="thai-help">È un valore generico importato: non è stato attribuito a hotel, trasporti o budget. Se è una spesa reale, registrala in Budget & Costi, poi rimuovi questo valore.</p></div>`:''}
                   ${d.notes?`<div class="text-xs bg-slate-50 dark:bg-slate-700/30 rounded-xl p-3 space-y-1"><p>📝 Note giornata: ${thaiEsc(d.notes)}</p></div>`:''}
                   
-                  <div class="space-y-2">
+                  <div class="activities-container space-y-2">
                     ${activities.length > 1 ? `<div class="flex justify-end">${thaiBtn('↔️ Sposta tutte le attività',`thaiOpenMove('all_activities',${i})`,'','Sposta tutte le attività di questo giorno in un altro')}</div>` : ''}
-                    ${activities.map(({a,j})=>`<div class="activity-detail bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-xs flex justify-between gap-2"><div class="min-w-0"><p class="font-semibold">${a.start?`<span class="text-brand-600">${thaiEsc(a.start)}${a.end?'–'+thaiEsc(a.end):''} · </span>`:''}${thaiEsc(a.title||a.desc||'Attività')}</p>${a.desc&&a.title?`<p class="mt-1 whitespace-pre-wrap">${thaiEsc(a.desc)}</p>`:''}${thaiActivityCostText(a)}<div class="flex gap-3 mt-1">${thaiLink(a.maps,'Google Maps')} ${thaiLink(a.link,'Apri link')}</div></div><div class="flex gap-1 items-start">${thaiBtn('↔️',`thaiOpenMove('activity',${i},${j})`,'','Sposta questa attività in un altro giorno')}${thaiBtn('✏️',`openActivityModal(${i},${j})`)}${thaiBtn('🗑️',`deleteActivity(${i},${j})`)}</div></div>`).join('')||'<p class="text-xs text-slate-400">Nessuna attività aggiunta.</p>'}
+                    ${activities.map(({a,j})=>`<div class="activity-detail bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-xs flex justify-between gap-2" draggable="true" data-activity-index="${j}"><div class="flex gap-2 items-start min-w-0 flex-1"><span class="activity-drag-handle p-1 text-slate-400 hover:text-slate-600 select-none cursor-grab" title="Trascina per riordinare">☷</span><div class="min-w-0 flex-1"><p class="font-semibold">${a.start?`<span class="text-brand-600">${thaiEsc(a.start)}${a.end?'–'+thaiEsc(a.end):''} · </span>`:''}${thaiEsc(a.title||a.desc||'Attività')}</p>${a.desc&&a.title?`<p class="mt-1 whitespace-pre-wrap">${thaiEsc(a.desc)}</p>`:''}${thaiActivityCostText(a)}<div class="flex gap-3 mt-1">${thaiLink(a.maps,'Google Maps')} ${thaiLink(a.link,'Apri link')}</div></div></div><div class="flex gap-1 items-start shrink-0">${thaiBtn('↔️',`thaiOpenMove('activity',${i},${j})`,'','Sposta questa attività in un altro giorno')}${thaiBtn('✏️',`openActivityModal(${i},${j})`)}${thaiBtn('🗑️',`deleteActivity(${i},${j})`)}</div></div>`).join('')||'<p class="text-xs text-slate-400">Nessuna attività aggiunta.</p>'}
                   </div>
                   ${thaiBtn('+ Aggiungi attività',`openActivityModal(${i})`)}
                 </article>`;
@@ -1922,7 +1934,7 @@
             saveDataToSheet();renderApp();
         }
         function renderApp(){renderItinerary();renderBudget();renderTodos();renderNotes();thaiRenderFlights();thaiRenderToday();initDragAndDrop();thaiInstallFolds();}
-        let thaiSortable, thaiTodoSortable, thaiNotesSortable;
+        let thaiSortable, thaiTodoSortable, thaiNotesSortable, thaiActivitySortables = [];
         function initDragAndDrop(){
             if(!window.Sortable)return;
             const el=document.getElementById('days-container');
@@ -1962,6 +1974,42 @@
                     }
                 });
             }
+
+            thaiActivitySortables.forEach(s => s.destroy());
+            thaiActivitySortables = [];
+            document.querySelectorAll('#days-container .day-card').forEach(dayCard => {
+                const dayIdx = parseInt(dayCard.dataset.dayIndex, 10);
+                const container = dayCard.querySelector('.activities-container');
+                if (container) {
+                    const sortable = new Sortable(container, {
+                        draggable: '.activity-detail',
+                        handle: '.activity-drag-handle',
+                        animation: 150,
+                        delayOnTouchOnly: true,
+                        delay: 120,
+                        touchStartThreshold: 5,
+                        onEnd: function(evt) {
+                            if (evt.oldIndex === evt.newIndex || evt.oldIndex == null || evt.newIndex == null) return;
+                            const day = tripData.days[dayIdx];
+                            if (!day || !day.activities) return;
+                            const cards = container.querySelectorAll('.activity-detail');
+                            const reorderedActivities = [];
+                            cards.forEach((card, newIdx) => {
+                                const originalIdx = parseInt(card.dataset.activityIndex, 10);
+                                const act = day.activities[originalIdx];
+                                if (act) {
+                                    act.order = newIdx;
+                                    reorderedActivities.push(act);
+                                }
+                            });
+                            day.activities = reorderedActivities;
+                            saveDataToSheet();
+                            renderApp();
+                        }
+                    });
+                    thaiActivitySortables.push(sortable);
+                }
+            });
         }
         async function exportJSONData(){
             const raw=JSON.stringify(tripData,null,2);
@@ -2262,7 +2310,12 @@
             const stays=thaiHotelStaysForDay(selected);
             const htmlStays=stays.map(st=>`<div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/30">${st.checkout?'🧳 Check-out':thaiDateKey(st.hotel.checkin)===thaiDateKey(d.date)?'🏨 Check-in':'🏨 Pernottamento'} · <strong>${thaiEsc(st.hotel.name||'Hotel')}</strong>${st.hotel.address?`<p>${thaiHotelAddress(st.hotel.address)}</p>`:''}</div>`).join('');
             const transports=(d.transports||[]).map(t=>`<div class="p-3 rounded-xl bg-sky-50 dark:bg-sky-950/30">🚆 <strong>${thaiEsc(t.type||'Trasporto')} ${thaiEsc(t.from||'')} → ${thaiEsc(t.to||'')}</strong><p>${thaiEsc(t.departure||'')} – ${thaiEsc(t.arrival||'')}</p></div>`).join('');
-            const acts=(d.activities||[]).slice().sort((a,b)=>(a.start||'99').localeCompare(b.start||'99')).map(a=>`<div class="p-3 rounded-xl bg-violet-50 dark:bg-violet-950/30">${thaiEsc(a.start||'')} <strong>${thaiEsc(a.title||a.desc||'Attività')}</strong> ${thaiLink(a.maps,'Google Maps')}</div>`).join('');
+            const acts=(d.activities||[]).map((a,j)=>({a,j})).sort((x,y)=>{
+                if(x.a.start && y.a.start && x.a.start !== y.a.start){ return x.a.start.localeCompare(y.a.start); }
+                if(x.a.start && !y.a.start) return -1;
+                if(!x.a.start && y.a.start) return 1;
+                return (x.a.order ?? x.j) - (y.a.order ?? y.j);
+            }).map(item=>item.a).map(a=>`<div class="p-3 rounded-xl bg-violet-50 dark:bg-violet-950/30">${thaiEsc(a.start||'')} <strong>${thaiEsc(a.title||a.desc||'Attività')}</strong> ${thaiLink(a.maps,'Google Maps')}</div>`).join('');
             const todos=(tripData.todos||[]).filter(t=>!t.done&&t.due&&thaiDateKey(t.due)===thaiDateKey(d.date)).map(t=>`<div class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30">☑ ${thaiEsc(t.text)}</div>`).join('');
             out.innerHTML=`<div class="bg-white dark:bg-slate-800 rounded-2xl border p-4 space-y-3"><h3 class="text-lg font-bold">${thaiEsc(d.title||'Tappa')}</h3>${htmlStays}${thaiDomesticForDay(selected)}${transports}${acts}${todos||''}${!htmlStays&&!transports&&!acts&&!todos?'<p>Nessuna attività registrata.</p>':''}</div>`;
         }
