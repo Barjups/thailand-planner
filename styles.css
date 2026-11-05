@@ -1,0 +1,611 @@
+body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .drag-handle { cursor: grab; touch-action: none; }
+        .drag-handle:active { cursor: grabbing; }
+        .activity-drag-handle { cursor: grab; touch-action: none; user-select: none; }
+        .activity-drag-handle:active { cursor: grabbing; }
+        .thai-modal-panel { max-height: 88dvh; overflow-y: auto; }
+        .thai-field { width:100%; background:transparent; border:1px solid #cbd5e1; border-radius:0.75rem; padding:0.65rem; font-size:0.875rem; }
+        .dark .thai-field { border-color:#475569; color:#f1f5f9; background:#19333d; }
+        .thai-label { display:block; font-size:.75rem; font-weight:600; margin-bottom:.3rem; }
+        .thai-action { display:inline-flex; align-items:center; gap:.3rem; border-radius:.65rem; padding:.45rem .7rem; font-size:.75rem; font-weight:700; background:#d9f1ee; color:#20676a; }
+        .dark .thai-action { background:#204f56; color:#c9f5ef; }
+        .thai-section { border:1px solid #e2e8f0; border-radius:.75rem; padding:.75rem; }
+        .dark .thai-section { border-color:#475569; }
+        .thai-pill { display:inline-block; border-radius:.5rem; padding:.15rem .4rem; background:#f1f5f9; font-size:.7rem; }
+        .dark .thai-pill { background:#334155; }
+
+        .dark { color-scheme: dark; }
+        .dark body { background-color: #10242c; color: #edf7f7; }
+        .dark input, .dark textarea, .dark select {
+            color: #f8fafc;
+            background-color: #19333d;
+            border-color: #64748b;
+        }
+        .dark input::placeholder, .dark textarea::placeholder { color: #cbd5e1; opacity: 1; }
+        .dark input:focus, .dark textarea:focus, .dark select:focus {
+            outline: 2px solid #7dd3c7;
+            outline-offset: 1px;
+            border-color: #7dd3c7;
+        }
+        .dark .thai-field { color:#f8fafc; background:#19333d; border-color:#64748b; }
+        .dark .thai-section { border-color:#64748b; }
+        .dark .thai-pill { color: #f1f5f9; background: #334155; }
+        .dark .thai-action { background: #245a61; color: #e0fffa; }
+        .dark .text-slate-400, .dark .text-slate-500 { color: #cbd5e1 !important; }
+        .dark .text-slate-600, .dark .text-slate-700, .dark .text-slate-800 { color: #e2e8f0 !important; }
+        .dark .text-brand-600, .dark .text-brand-700 { color: #8fddd5 !important; }
+        .dark .text-sky-900 { color: #c5e8fb !important; }
+        .dark .bg-sky-50 { background-color: #163c4b; }
+        .dark .bg-teal-50 { background-color: #163b43; }
+        .dark .bg-brand-50 { background-color: #163b43; }
+        .dark .bg-emerald-100 { background-color: #064e3b; }
+        .dark .text-emerald-800, .dark .text-emerald-700 { color: #a7f3d0 !important; }
+        .dark a:not([class*="text-"]) { color: #8fddd5; }
+        .dark a:hover { text-decoration: underline; }
+        .dark button:focus-visible, .dark a:focus-visible { outline: 2px solid #8fddd5; outline-offset: 2px; }
+
+        .dark .dark\:bg-slate-900 { background-color: #10242c !important; }
+        .dark .dark\:bg-slate-800 { background-color: #1a3842 !important; }
+        .dark .dark\:bg-slate-800\/90 { background-color: rgba(26,56,66,.94) !important; }
+        .dark .dark\:bg-slate-700 { background-color: #254650 !important; }
+        .dark .dark\:bg-slate-700\/50 { background-color: rgba(37,70,80,.55) !important; }
+        .dark .dark\:bg-slate-700\/40 { background-color: rgba(37,70,80,.45) !important; }
+        .dark .dark\:border-slate-700, .dark .dark\:border-slate-600 { border-color: #42616c !important; }
+        .dark .dark\:bg-brand-900\/30 { background-color: rgba(52,122,124,.28) !important; }
+        .dark .dark\:bg-brand-900\/50 { background-color: rgba(52,122,124,.42) !important; }
+        .dark .dark\:text-brand-400, .dark .dark\:text-brand-300 { color: #9ce1d8 !important; }
+        .dark .dark\:bg-teal-950\/30 { background-color: #1a3d47 !important; }
+        .dark .dark\:bg-sky-950\/30 { background-color: #1a394b !important; }
+        .dark .thai-action:hover { background-color: #2d6f72; }
+        .dark .text-sky-800 { color: #c8e9fa !important; }
+        .dark .text-sky-900 { color: #e1f2fc !important; }
+        .dark a { text-underline-offset: 2px; }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
+
+        :root {
+          --thai-sea:#81d5cf; --thai-ocean:#8ec6ed; --thai-peach:#f8cda9;
+          --thai-lilac:#c6bbf2; --thai-sand:#f6dfb9;
+        }
+        @media (max-width: 767px) {
+          #planner-sidebar { display:contents; }
+          #planner-sidebar > nav { order:1; }
+          main { order:2; }
+          #planner-sidebar > .flight-card { order:3; }
+          #planner-sidebar > .travellers-card { order:4; }
+          .planner-nav { gap:.35rem; }
+          .planner-nav .tab-btn { min-height:48px; justify-content:flex-start; }
+          input, select, textarea { font-size:16px !important; }
+          .thai-modal-panel { max-height:86dvh; }
+          .budget-stat { min-height:124px; }
+        }
+        .planner-nav, .flight-card, .travellers-card, .day-card, .day-summary-card, .budget-stat {
+          box-shadow:0 8px 28px rgba(12, 34, 42, .07);
+        }
+        .flight-card { background:#fff4e7 !important; border-color:#f2d7b5 !important; color:#543c2c !important; }
+        .flight-card .text-slate-600, .flight-card .text-slate-400 { color:#765843 !important; }
+        .flight-card h2 { color:#875d32; }
+        .travellers-card { background:#f2efff !important; border-color:#dfd7fa !important; color:#3d365d !important; }
+        .travellers-card h2 { color:#584d8b !important; }
+        .day-summary-card { background:#ecf7ff !important; border-color:#c6e3f5 !important; }
+        .hotel-detail { background:#f0faf5; border-color:#c2e5d5; }
+        .transport-detail { background:#eef6ff; border-color:#cee1f6; }
+        .activity-detail { border-left:3px solid #8acbc6 !important; }
+        .budget-stat { padding:1rem; border:1px solid transparent; border-radius:1rem; display:flex; flex-direction:column; gap:.45rem; }
+        .budget-stat-head { display:flex; align-items:center; gap:.5rem; font-size:.78rem; font-weight:700; }
+        .budget-stat-icon { display:inline-grid; place-items:center; width:2rem; height:2rem; border-radius:.65rem; background:rgba(255,255,255,.55); }
+        .budget-stat-value { font-size:clamp(1.35rem, 3vw, 1.7rem); line-height:1.25; font-variant-numeric:tabular-nums; }
+        .budget-stat-note { font-size:.72rem; opacity:.85; }
+        .budget-stat-result { font-size:.86rem; line-height:1.6; font-weight:550; }
+        .budget-stat-result b { font-size:1rem; }
+        .budget-barbara { background:#e6f5fe; border-color:#b9dbed; color:#19465f; }
+        .budget-laura { background:#eddefb; border-color:#d6c0f0; color:#4b326c; }
+        .budget-balance { background:#dff6e9; border-color:#b2dec5; color:#1c5745; }
+        .dark .flight-card { background:#42372f !important; border-color:#80634a !important; color:#fff0dd !important; }
+        .dark .flight-card h2, .dark .flight-card .text-brand-600, .dark .flight-card .text-brand-700 { color:#ffddb0 !important; }
+        .dark .flight-card .text-slate-600, .dark .flight-card .text-slate-400, .dark .flight-card .text-slate-300 { color:#f2d9bf !important; }
+        .dark .flight-card .bg-sky-100 { background:#6a503b !important; color:#fff0db !important; }
+        .dark .flight-card .border-teal-200, .dark .flight-card .border-teal-800 { border-color:#80634a !important; }
+        .dark .travellers-card { background:#34334d !important; border-color:#676184 !important; color:#f2edff !important; }
+        .dark .travellers-card h2 { color:#dfd3ff !important; }
+        .dark .travellers-card .dark\:bg-slate-700\/50 { background:#44415d !important; }
+        .dark .day-summary-card { background:#213d53 !important; border-color:#517893 !important; }
+        .dark .hotel-detail { background:#1f413a; border-color:#416d5e; }
+        .dark .transport-detail { background:#213e51; border-color:#456b84; }
+        .dark .activity-detail { background:#25414a !important; border-color:#45656d !important; border-left:3px solid #8acbc6 !important; }
+        .dark .budget-barbara { background:#203e53; border-color:#47718a; color:#d9efff; }
+        .dark .budget-laura { background:#3b304e; border-color:#706088; color:#f0e6ff; }
+        .dark .budget-balance { background:#1d483e; border-color:#447965; color:#ddf8e8; }
+        .dark .budget-stat-icon { background:rgba(255,255,255,.1); }
+        .dark .budget-stat-note { color:inherit !important; }
+        .dark .budget-stat-result { color:inherit; }
+        .dark .budget-stat-result b { color:#baf4d5; }
+        .dark .notes-page #notes-container > div { background:#35334b !important; border-color:#686184 !important; color:#eee8fc; }
+        .dark .notes-page #notes-container > div b { color:#e6d7ff; }
+        .dark .checklist-page #todo-list > div { background:#263c4a !important; border-color:#49687a !important; }
+        .dark .budget-page #expenses-list > div { background:#233f4a !important; border-color:#42616c !important; }
+        .dark .planner-nav .tab-btn.active { background:#285c62 !important; color:#dbfaf3 !important; }
+        .tab-btn { transition:background .15s ease, color .15s ease; }
+        .tab-btn:focus-visible, button:focus-visible { outline:2px solid #75cdc4; outline-offset:3px; }
+        @media (prefers-reduced-motion:reduce) { .tab-btn { transition:none; } }
+
+        .thai-legacy {padding: 0.8rem; border-radius: .8rem; background:#fff8ec; border:1px solid #f2d9aa; color:#674d2c;}
+        .thai-help {font-size: .73rem; line-height:1.5; margin-top:.4rem; opacity:.88;}
+        html.dark .thai-legacy {background:#403b32; border-color:#857052; color:#f8e7c7;}
+        .thai-expense-icon {flex:none; display:inline-flex; justify-content:center; align-items:center; width:2.15rem;height:2.15rem;border-radius:.65rem;background:#e2f4f2;font-size:1.15rem;}
+        html.dark .thai-expense-icon {background:#30565b;}
+        .todo-drag-handle:active {cursor:grabbing;}
+
+        .thai-fold-toggle{display:inline-flex;align-items:center;justify-content:center;gap:.35rem;min-height:36px;padding:.4rem .65rem;border:1px solid #a3c8c6;border-radius:.7rem;background:#e8f6f3;color:#205b60;font-weight:700;font-size:.76rem;cursor:pointer;white-space:nowrap}
+        .dark .thai-fold-toggle{background:#254750;border-color:#547982;color:#d5f8f2}
+        .thai-fold-toggle:hover{filter:brightness(.96)}
+        .thai-fold-toggle:focus-visible{outline:2px solid #58bfb8;outline-offset:3px}
+        .thai-fold-header{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-bottom:.6rem}
+        .thai-fold-body[hidden]{display:none!important}
+        .thai-fold-collapsed{margin-bottom:0!important}
+        .thai-global-folds{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin:.4rem 0 .7rem}
+        .thai-fold-shell{min-width:0}
+        @media(max-width:767px){.thai-fold-toggle{min-height:42px}.thai-global-folds button{flex:1}}
+
+        .thai-fold-toggle { transition: background-color .16s, border-color .16s, color .16s; }
+        .thai-global-folds .thai-fold-toggle { background:#dceeea; color:#195960; border-color:#81b9b5; }
+        .dark .thai-global-folds .thai-fold-toggle { background:#25545a; color:#e0fcf8; border-color:#6aa9a5; }
+        [data-thai-fold-key^="day:"] > :not(.thai-fold-body) .thai-fold-toggle { background:#e2f1fc; color:#205574; border-color:#9fc8df; }
+        .dark [data-thai-fold-key^="day:"] > :not(.thai-fold-body) .thai-fold-toggle { background:#315a70; color:#edf9ff; border-color:#719db6; }
+        [data-thai-fold-key$=":hotel"] > .thai-fold-header .thai-fold-toggle { background:#e1f3e7; color:#205e44; border-color:#a3d3b4; }
+        .dark [data-thai-fold-key$=":hotel"] > .thai-fold-header .thai-fold-toggle { background:#34634f; color:#edfff4; border-color:#77ae90; }
+        [data-thai-fold-key$=":transports"] > .thai-fold-header .thai-fold-toggle { background:#e5f2ff; color:#235779; border-color:#a5c9e8; }
+        .dark [data-thai-fold-key$=":transports"] > .thai-fold-header .thai-fold-toggle { background:#365d78; color:#f0faff; border-color:#7ca8c5; }
+        [data-thai-fold-key$=":activities"] > .thai-fold-header .thai-fold-toggle,
+        [data-thai-fold-key^="note:"] > .thai-fold-header .thai-fold-toggle { background:#f1eafd; color:#65478d; border-color:#cbb9e6; }
+        .dark [data-thai-fold-key$=":activities"] > .thai-fold-header .thai-fold-toggle,
+        .dark [data-thai-fold-key^="note:"] > .thai-fold-header .thai-fold-toggle { background:#584c76; color:#fbf2ff; border-color:#9585b4; }
+        [data-thai-fold-key="flights"] > .thai-fold-header .thai-fold-toggle { background:#fff0db; color:#855522; border-color:#eec891; }
+        .dark [data-thai-fold-key="flights"] > .thai-fold-header .thai-fold-toggle { background:#6c533b; color:#ffefdc; border-color:#ba946f; }
+        [data-thai-fold-key="travellers"] > .thai-fold-header .thai-fold-toggle { background:#fbe9ef; color:#854e69; border-color:#e7b9ca; }
+        .dark [data-thai-fold-key="travellers"] > .thai-fold-header .thai-fold-toggle { background:#664b62; color:#fff0f6; border-color:#ab839e; }
+        [data-thai-fold-key^="budget:"] > .thai-fold-header .thai-fold-toggle,
+        [data-thai-fold-key^="expense:"] > .thai-fold-header .thai-fold-toggle { background:#e1f4ed; color:#22644d; border-color:#a4d6c4; }
+        .dark [data-thai-fold-key^="budget:"] > .thai-fold-header .thai-fold-toggle,
+        .dark [data-thai-fold-key^="expense:"] > .thai-fold-header .thai-fold-toggle { background:#315e55; color:#eafff7; border-color:#79afa2; }
+        [data-thai-fold-key^="todo:"] > .thai-fold-header .thai-fold-toggle { background:#e8f2fb; color:#29567c; border-color:#adcbe6; }
+        .dark [data-thai-fold-key^="todo:"] > .thai-fold-header .thai-fold-toggle { background:#34556b; color:#eaf8ff; border-color:#83a9c5; }
+        .thai-fold-collapsed > .thai-fold-header .thai-fold-toggle,
+        .thai-fold-collapsed > :not(.thai-fold-body) .thai-fold-toggle { box-shadow:inset 0 0 0 1px currentColor; }
+        .thai-fold-toggle:focus-visible { outline:3px solid #73cfc5; outline-offset:2px; }
+        @media (prefers-reduced-motion:reduce){.thai-fold-toggle{transition:none}}
+
+        .thai-global-folds .thai-fold-toggle.thai-global-collapse {background:#e3f0fa;color:#205576;border-color:#9bc5e3;}
+        .thai-global-folds .thai-fold-toggle.thai-global-expand {background:#ddf2e8;color:#1c694f;border-color:#90cbb2;}
+        .dark .thai-global-folds .thai-fold-toggle.thai-global-collapse {background:#36576c;color:#e1f1ff;border-color:#608ba4;}
+        .dark .thai-global-folds .thai-fold-toggle.thai-global-expand {background:#27665a;color:#e1fff5;border-color:#62a99b;}
+        .thai-linked-stay {padding:.7rem .9rem!important;}
+        .thai-linked-stay-summary {display:flex;align-items:center;justify-content:space-between;gap:.8rem;cursor:pointer;list-style:none;min-height:46px;}
+        .thai-linked-stay-summary::-webkit-details-marker{display:none;}
+        .thai-linked-stay-main {display:flex;flex-direction:column;gap:.25rem;min-width:0;line-height:1.35;}
+        .thai-linked-stay-main strong{font-size:.86rem;}
+        .thai-linked-stay-main small{font-size:.73rem;opacity:.82;overflow-wrap:anywhere;}
+        .thai-linked-stay-hint{display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap;font-size:.72rem;font-weight:700;padding:.4rem .55rem;border-radius:.65rem;background:#dff2e6;color:#225b44;border:1px solid #a3d4b5;}
+        .dark .thai-linked-stay-hint{background:#34634f;color:#edfff4;border-color:#77ae90;}
+        .thai-linked-stay-chevron {display:inline-block;transition:transform .16s ease;}
+        .thai-linked-stay[open] .thai-linked-stay-chevron {transform:rotate(180deg);}
+        .thai-linked-stay-details {border-top:1px solid rgba(120,169,150,.45);margin-top:.7rem;padding-top:.8rem;}
+        .thai-linked-stay-summary:focus-visible {outline:3px solid #73cfc5;outline-offset:3px;border-radius:.4rem;}
+        @media(max-width:480px){.thai-linked-stay-summary{align-items:flex-start}.thai-linked-stay-hint{margin-top:.1rem}}
+
+        .thai-expense-card{background:#f1f7f8;border:1px solid #cadfe0;color:#1c3742;}
+        .dark .thai-expense-card{background:#213e4b;border-color:#42616c;color:#eef8fa;}
+        .thai-expense-head{display:flex;align-items:center;gap:.75rem;flex-wrap:nowrap;margin:0!important;}
+        .thai-expense-main{display:flex;flex:1;flex-direction:column;gap:.15rem;min-width:0;}
+        .thai-expense-name{font-size:.91rem;overflow-wrap:anywhere;line-height:1.3;}
+        .thai-expense-meta{font-size:.75rem;color:#506d77;overflow-wrap:anywhere;}
+        .dark .thai-expense-meta{color:#b9d2d9;}
+        .thai-expense-amount{font-size:1rem;white-space:nowrap;font-variant-numeric:tabular-nums;}
+        .thai-expense-chevron{width:38px;min-width:38px;height:38px;padding:0!important;border-radius:10px!important;background:#d9eeec!important;color:#235c63!important;border-color:#91c7c2!important;font-size:1.05rem!important;}
+        .dark .thai-expense-chevron{background:#315c62!important;color:#e9fbf8!important;border-color:#69a5a3!important;}
+        .thai-expense-details{margin-top:.75rem;padding-top:.75rem;border-top:1px solid #bdd4d9;}
+        .dark .thai-expense-details{border-color:#476672;}
+        .thai-expense-split{display:flex;flex-wrap:wrap;gap:.35rem;font-size:.78rem;color:#415f68;}
+        .dark .thai-expense-split{color:#d0e2e6;}
+        .thai-expense-actions{display:flex;justify-content:flex-end;gap:.5rem;margin-top:.75rem;}
+        .thai-expense-actions button{min-height:40px;padding:.45rem .8rem;border-radius:.6rem;font-size:.78rem;font-weight:700;}
+        .thai-expense-edit{background:#d9edf2;color:#24596b;}
+        .dark .thai-expense-edit{background:#295a68;color:#e3f6fa;}
+        .thai-expense-delete{background:#fae5e8;color:#913c52;}
+        .dark .thai-expense-delete{background:#543e49;color:#ffe5ec;}
+        @media(max-width:480px){.thai-expense-head{gap:.5rem}.thai-expense-icon{width:2rem;height:2rem}.thai-expense-amount{font-size:.88rem}.thai-expense-meta{font-size:.7rem}.thai-expense-chevron{width:40px;min-width:40px}}
+
+        .thai-hotel-name strong{font-size:1rem;line-height:1.5;font-weight:800;overflow-wrap:anywhere}
+        .thai-hotel-map-link{display:inline-flex;align-items:baseline;gap:.35rem;max-width:100%;color:#176b76;text-decoration:underline;text-underline-offset:3px;font-weight:650;overflow-wrap:anywhere;padding:.2rem 0}
+        .dark .thai-hotel-map-link{color:#a5ece3}
+        .thai-hotel-map-link:hover{filter:brightness(1.15)}
+        .thai-hotel-map-link:focus-visible{outline:3px solid #68cbbc;outline-offset:3px;border-radius:.25rem}
+
+        .thai-night-tag{display:inline-flex;align-items:center;padding:.23rem .55rem;border-radius:999px;font-size:.72rem;font-weight:750;background:#dff1e7;color:#24654e;border:1px solid #b1dcca}
+        .dark .thai-night-tag{background:#315b50;color:#def8ec;border-color:#6b9e88}
+        .thai-change-route{border:1px solid #a5c4cf;border-radius:1rem;padding:.8rem;background:#f2f8fa;color:#224b59}
+        .dark .thai-change-route{background:#233b4a;border-color:#547588;color:#e4f3f7}
+        .thai-change-route-item{display:flex;align-items:flex-start;gap:.6rem;padding:.4rem 0;font-size:.82rem}
+        .thai-change-route-dot{width:1.5rem;height:1.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#d9edf1;flex:none}
+        .dark .thai-change-route-dot{background:#345867}
+        .thai-todo-row{display:flex;align-items:center;gap:.7rem;border-radius:.9rem;padding:.75rem .8rem!important;border:1px solid #cbdfe3;background:#f8fbfc!important;min-height:62px}
+        .dark .thai-todo-row{background:#213b47!important;border-color:#486775!important}
+        .thai-todo-row.is-done{opacity:.72}
+        .thai-todo-check{width:21px;height:21px;accent-color:#2b877d;flex:none}
+        .thai-todo-main{flex:1;min-width:0}
+        .thai-todo-text{display:block;font-size:.9rem;font-weight:650;line-height:1.3;overflow-wrap:anywhere}
+        .thai-todo-meta{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.25rem}
+        .thai-todo-chip{display:inline-block;padding:.13rem .5rem;border-radius:99px;font-size:.7rem;font-weight:650;background:#e5eff5;color:#36576c}
+        .dark .thai-todo-chip{background:#365362;color:#e3eff6}
+        .thai-todo-drag{font-size:1.2rem;color:#658895;cursor:grab;touch-action:none;user-select:none;padding:.45rem;flex:none}
+        .thai-todo-action{width:39px;height:39px;border-radius:.65rem;display:inline-flex;align-items:center;justify-content:center;background:#e2f0ef;color:#205b59;border:1px solid #c4dbd8;flex:none}
+        .dark .thai-todo-action{background:#315865;color:#e2f5fa;border-color:#56828c}
+        .thai-todo-action.danger{background:#f8eaed;color:#9e4759;border-color:#ecc7cf}
+        .dark .thai-todo-action.danger{background:#533b48;color:#ffe4ed;border-color:#805c69}
+        .thai-todo-toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem}
+        .thai-todo-progress{height:6px;background:#d8e7e7;border-radius:10px;overflow:hidden;margin-bottom:1rem}
+        .thai-todo-progress>div{background:#4aada0;height:100%;transition:width .2s}
+        @media(max-width:480px){.thai-todo-row{gap:.35rem;padding:.55rem!important}.thai-todo-action{width:34px;height:36px}.thai-todo-drag{padding:.24rem}.thai-todo-text{font-size:.84rem}}
+
+        @media (max-width: 767px) {
+          #tab-itinerary .thai-global-folds { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:.5rem; width:100%; }
+          #tab-itinerary .thai-global-folds .thai-fold-toggle { min-width:0; white-space:normal; line-height:1.25; padding:.65rem .35rem; min-height:46px; text-align:center; }
+          #days-container .thai-day-header { display:flex; flex-wrap:wrap; align-items:flex-start; gap:.55rem; }
+          #days-container .thai-day-header > :first-child { min-width:0; flex:1 1 145px; }
+          #days-container .thai-day-actions { display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:.4rem; flex:1 1 100%; width:100%; }
+          #days-container .thai-day-collapse-action { min-width:112px; min-height:44px; flex:0 0 auto; }
+          #days-container .thai-fold-header { min-width:0; gap:.4rem; }
+          #days-container .thai-fold-header > :first-child { min-width:0; overflow-wrap:anywhere; }
+          #days-container .thai-fold-header .thai-fold-toggle { flex:0 0 auto; min-height:44px; }
+        }
+        @media (max-width:360px) {
+          #tab-itinerary .thai-global-folds { grid-template-columns:minmax(0,1fr); }
+        }
+
+        .thai-forecast-stat { background:rgba(255,255,255,.72);border:1px solid #b5d9dd;border-radius:.85rem;padding:.7rem;display:flex;flex-direction:column;gap:.35rem;min-width:0 }
+        .thai-forecast-stat span { font-size:.7rem;color:#34566b;font-weight:600 }
+        .thai-forecast-stat strong { font-size:clamp(.95rem,2vw,1.25rem);font-variant-numeric:tabular-nums;overflow-wrap:anywhere }
+        .dark .thai-forecast-stat{background:#244650;border-color:#487982}
+        .dark .thai-forecast-stat span{color:#c3e9ea}
+        .thai-forecast-row { display:flex;align-items:center;flex-wrap:wrap;gap:.65rem;border:1px solid #c4dadb;border-radius:.85rem;padding:.7rem;background:rgba(255,255,255,.65) }
+        .dark .thai-forecast-row{background:#203a49;border-color:#496e77}
+        .thai-forecast-actions{display:flex;gap:.3rem;flex-wrap:wrap;width:100%;justify-content:flex-end}
+        .thai-forecast-actions button {min-height:40px;padding:.4rem .65rem;border-radius:.65rem;border:1px solid #a9cfd0;font-size:.78rem;font-weight:600}
+        .dark .thai-forecast-actions button {border-color:#67939c;color:#e4f8f7}
+        #thai-forecast-modal .thai-field {width:100%;display:block;margin-top:.35rem;min-height:44px}
+        @media(max-width:767px){
+          #tab-budget > div {padding:1rem!important}
+          #tab-budget .budget-stat {min-height:0;padding:.85rem}
+          #tab-budget .budget-stat-value {font-size:1.25rem}
+          #thai-forecast-panel {padding:.85rem}
+          .thai-forecast-row > strong {margin-left:auto}
+          .thai-forecast-actions {justify-content:flex-start}
+          .thai-forecast-actions button {flex:1 1 auto}
+          #tab-itinerary button, #tab-budget button, #tab-notes button, #tab-checklist button {touch-action:manipulation}
+        }
+        @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+        .thai-header{
+          display:grid;
+          grid-template-columns:minmax(0,1fr) minmax(0,auto) auto;
+          grid-template-areas:"brand converter tools";
+          gap:.75rem 1rem;
+          align-items:center;
+        }
+        .thai-header-brand{grid-area:brand}
+        .thai-header-actions{display:contents}
+        .thai-converter{grid-area:converter;justify-content:flex-end}
+        .thai-header-tools{grid-area:tools;justify-content:flex-end}
+        .thai-title-mobile{display:none}
+        .thai-header-title{min-width:0;font-size:1rem;line-height:1.25;flex-wrap:wrap;column-gap:.5rem;row-gap:.2rem}
+        #sync-status{display:inline-flex;align-items:center;max-width:100%;white-space:normal;line-height:1.2}
+        .thai-header-tools>button,.thai-header-tools>details>summary{border:1px solid transparent}
+        .thai-header-tools>button:hover,.thai-header-tools>details>summary:hover{border-color:#b7d8d6}
+        .thai-header-tools>button:focus-visible,.thai-header-tools>details>summary:focus-visible{outline:2px solid #60bfb5;outline-offset:2px}
+        .thai-converter #thai-rate-label{white-space:normal;line-height:1.25;font-variant-numeric:tabular-nums}
+        .thai-converter input{font-variant-numeric:tabular-nums}
+        #thai-tools-menu[open]>summary{background:#e1f2ef;color:#205c62}
+        .dark #thai-tools-menu[open]>summary{background:#315b62;color:#dffbf4}
+
+        #planner-sidebar .planner-nav,#planner-sidebar .flight-card,#planner-sidebar .travellers-card,
+        #days-container .day-card,.day-summary-card,#tab-budget>div,#tab-notes>div,#tab-checklist>div{
+          border-radius:1rem;
+        }
+        #days-container .day-card{padding:1rem;min-width:0}
+        #days-container .day-card>div{min-width:0}
+        #days-container .day-card h3{font-size:1rem;line-height:1.4;overflow-wrap:anywhere}
+        #days-container .day-card .thai-section{border-radius:.85rem;padding:.8rem;line-height:1.55}
+        #days-container .activity-detail{line-height:1.5}
+        #days-container .thai-legacy{line-height:1.5}
+        #days-container .day-card a{overflow-wrap:anywhere}
+        .planner-nav .tab-btn{border-radius:.8rem;font-size:.875rem;line-height:1.35}
+        .thai-action{line-height:1.3;white-space:normal;text-align:center;justify-content:center;max-width:100%;transition:background-color .15s ease,filter .15s ease}
+        .thai-budget-link,.dark .thai-budget-link{
+          display:inline-flex!important;
+          width:auto!important;
+          min-height:30px!important;
+          max-width:max-content;
+          padding:.25rem .5rem!important;
+          font-size:.7rem!important;
+          font-weight:650!important;
+          line-height:1.15!important;
+          border-radius:.5rem!important;
+          vertical-align:middle;
+          white-space:nowrap;
+        }
+        .thai-budget-link{background:#e0f1ea!important;color:#27664f!important;border:1px solid #bedeca}
+        .dark .thai-budget-link{background:#285548!important;color:#dbf8eb!important;border:1px solid #4e8572}
+        .thai-budget-link{margin-left:.65rem!important;margin-top:.35rem!important;margin-bottom:.15rem!important;gap:.2rem!important}
+        .thai-budget-link:hover{filter:brightness(.95)}
+        #tab-budget .budget-stat{min-width:0}
+        #tab-budget .budget-stat-value{overflow-wrap:anywhere}
+        #tab-budget .thai-forecast-row{gap:.6rem}
+        #tab-budget .thai-forecast-actions button{min-height:36px}
+        .thai-modal-panel,.thai-flight-modal-panel{border-radius:1rem}
+        .thai-field{max-width:100%}
+        @media(min-width:768px) and (max-width:1100px){
+          .thai-header{
+            grid-template-columns:minmax(0,1fr) auto;
+            grid-template-areas:"brand tools" "converter converter";
+          }
+          .thai-converter{justify-content:flex-start;flex-wrap:wrap}
+          .thai-header-tools{justify-content:flex-end}
+        }
+        @media(min-width:1101px){
+          .thai-header{grid-template-columns:minmax(190px,1fr) auto auto}
+          .thai-converter{flex-wrap:nowrap}
+          #days-container .day-card{padding:1.1rem 1.25rem}
+          .planner-nav .tab-btn:hover{background:rgba(79,157,150,.12)}
+        }
+        @media(max-width:767px){
+          .thai-header{
+            grid-template-columns:minmax(0,1fr) auto;
+            grid-template-areas:"brand tools" "converter converter";
+            padding:.65rem .8rem;
+            column-gap:.35rem;row-gap:.55rem;
+          }
+          .thai-title-desktop,.thai-header-subtitle{display:none}
+          .thai-title-mobile{display:inline}
+          .thai-header-title{font-size:.9rem;gap:.25rem;align-items:center}
+          .thai-header-flag{padding:.4rem}
+          .thai-header-flag svg{width:25px;height:17px}
+          #sync-status{font-size:.6rem;padding:.1rem .4rem}
+          .thai-header-brand{gap:.5rem}
+          .thai-header-tools{gap:0}
+          .thai-header-tools>button,.thai-header-tools>details>summary{min-width:40px;min-height:40px;padding:.55rem}
+          .thai-converter{justify-content:space-between;gap:.4rem;flex-wrap:nowrap;width:100%}
+          .thai-converter>div{padding:.25rem .4rem;gap:.3rem;min-width:0}
+          .thai-converter input{width:3.1rem;min-width:0;font-size:16px!important;padding:.3rem .15rem}
+          #thb-input{width:3.8rem}
+          .thai-converter #thai-rate-label{font-size:.65rem;max-width:46%;min-width:0;padding:.35rem .45rem;min-height:36px}
+          #thai-tools-menu>summary+div{max-width:calc(100vw - 1.5rem)}
+          .planner-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:.35rem}
+          .planner-nav .tab-btn{min-width:0;min-height:44px;padding:.7rem .75rem;gap:.4rem}
+          .planner-nav .tab-btn span{overflow-wrap:anywhere}
+          #days-container .day-card{padding:.8rem}
+          #days-container .day-card .thai-section{padding:.7rem}
+          #days-container .day-card>div.flex.flex-wrap.gap-2{gap:.4rem}
+          #days-container .day-card>div.flex.flex-wrap.gap-2 .thai-action{font-size:.72rem;padding:.45rem .6rem}
+          .thai-forecast-row{align-items:flex-start}
+          .thai-modal-panel{max-height:90dvh}
+          #tab-budget>div{padding:1rem}
+        }
+        @media(max-width:360px){
+          .thai-header{padding:.55rem .55rem}
+          .thai-header-title{font-size:.82rem}
+          .thai-header-tools>button,.thai-header-tools>details>summary{min-width:36px;min-height:40px;padding:.45rem}
+          .thai-converter>div i{display:none}
+          .thai-converter #thai-rate-label{font-size:.59rem}
+        }
+
+        #tab-budget > div{gap:1rem}
+        #tab-budget .thai-fold-header{margin-bottom:.45rem;gap:.55rem}
+        #tab-budget .thai-fold-header > :first-child{min-width:0;overflow-wrap:anywhere}
+        #tab-budget .thai-fold-body{min-width:0}
+        #tab-budget section[aria-label="Quanto costa il viaggio a persona"]{gap:.6rem}
+        #tab-budget section[aria-label="Quanto costa il viaggio a persona"] .thai-fold-body{gap:.7rem}
+        #tab-budget .thai-budget-intro{line-height:1.45;max-width:65ch;margin:0}
+        #tab-budget .budget-stat{gap:.32rem;padding:.8rem .9rem;min-height:0;box-shadow:none}
+        #tab-budget .budget-stat-head{gap:.45rem;font-size:.76rem;line-height:1.3}
+        #tab-budget .budget-stat-icon{width:1.8rem;height:1.8rem;font-size:.95rem;border-radius:.55rem}
+        #tab-budget .budget-stat-value{font-size:clamp(1.1rem,2vw,1.5rem);line-height:1.2;overflow-wrap:anywhere}
+        #tab-budget .budget-stat-note{font-size:.7rem;line-height:1.3}
+        #tab-budget .budget-stat-result{font-size:.83rem;line-height:1.4}
+        #tab-budget .budget-stat-result b{font-size:.92rem}
+        #tab-budget #personal-budget-summary{gap:.65rem}
+        #tab-budget #split-summary-box{gap:.65rem}
+        #tab-budget .thai-category-summary{padding:.8rem .9rem;font-size:.78rem;min-width:0}
+        #tab-budget .thai-category-summary p{margin-bottom:.4rem}
+        #tab-budget .thai-category-grid{gap:.4rem .8rem;align-items:baseline}
+        #tab-budget .thai-category-grid span,#tab-budget .thai-category-grid b{min-width:0;overflow-wrap:anywhere}
+        #tab-budget .thai-category-grid span:nth-child(3n+2),
+        #tab-budget .thai-category-grid span:nth-child(3n+3){white-space:nowrap;font-variant-numeric:tabular-nums}
+        #tab-budget #thai-forecast-panel{padding:.85rem;gap:.7rem}
+        #tab-budget #thai-forecast-panel .thai-fold-body{gap:.75rem}
+        #tab-budget #thai-forecast-panel .thai-forecast-stat{padding:.65rem .75rem;gap:.22rem;min-height:0}
+        #tab-budget #thai-forecast-panel .thai-forecast-stat span{font-size:.69rem;line-height:1.3}
+        #tab-budget #thai-forecast-panel .thai-forecast-stat strong{font-size:clamp(.95rem,1.65vw,1.25rem);line-height:1.25;white-space:normal}
+        #tab-budget #thai-forecast-panel .budget-stat strong{font-size:clamp(1.05rem,1.8vw,1.4rem);line-height:1.2}
+        #tab-budget #thai-forecast-panel button[onclick="thaiOpenForecast()"]{min-height:36px;padding:.4rem .65rem;font-size:.74rem;flex:0 0 auto}
+        #tab-budget #thai-forecast-list{gap:.55rem}
+        #tab-budget .thai-forecast-row{display:grid;grid-template-columns:1.8rem minmax(0,1fr) auto;align-items:center;gap:.5rem .7rem;padding:.65rem .75rem}
+        #tab-budget .thai-forecast-icon{grid-column:1;grid-row:1}
+        #tab-budget .thai-forecast-row>div.flex-1{grid-column:2;grid-row:1}
+        #tab-budget .thai-forecast-row>strong{grid-column:3;grid-row:1;white-space:nowrap;font-variant-numeric:tabular-nums;font-size:.95rem;margin:0}
+        #tab-budget .thai-forecast-actions{grid-column:2 / -1;grid-row:2;justify-content:flex-end;gap:.35rem}
+        #tab-budget .thai-forecast-actions button{flex:0 0 auto;min-height:34px;padding:.3rem .55rem;font-size:.73rem}
+        #tab-budget .thai-expense-heading{margin:.25rem 0 0;font-size:.9rem}
+        #tab-budget #expenses-list{gap:.6rem}
+        #tab-budget .thai-expense-card{padding:.7rem .8rem}
+        #tab-budget .thai-expense-head{gap:.6rem}
+        #tab-budget .thai-expense-name{font-size:.85rem}
+        #tab-budget .thai-expense-meta{font-size:.72rem}
+        #tab-budget .thai-expense-icon{width:1.85rem;height:1.85rem;font-size:1rem}
+        #tab-budget .thai-expense-amount{font-size:.95rem}
+        #tab-budget .thai-expense-details{margin-top:.6rem;padding-top:.55rem}
+        #tab-budget .thai-expense-actions{margin-top:.6rem;gap:.4rem}
+        #tab-budget .thai-expense-actions button{min-height:36px;padding:.35rem .7rem;font-size:.75rem}
+        #tab-budget #expense-filter-sum{font-variant-numeric:tabular-nums}
+        @media(max-width:767px){
+          #tab-budget>div{padding:.8rem!important;gap:.8rem}
+          #tab-budget .thai-category-grid{gap:.4rem .45rem;font-size:.7rem}
+          #tab-budget .thai-category-summary{padding:.7rem}
+          #tab-budget .thai-category-grid span:nth-child(3n+2),
+          #tab-budget .thai-category-grid span:nth-child(3n+3){white-space:normal;text-align:right}
+          #tab-budget #personal-budget-summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem}
+          #tab-budget #personal-budget-summary .budget-stat{padding:.6rem;gap:.25rem}
+          #tab-budget #personal-budget-summary .budget-stat-head{font-size:.7rem;flex-wrap:wrap}
+          #tab-budget #personal-budget-summary .budget-stat-value{font-size:clamp(.95rem,3.5vw,1.25rem)}
+          #tab-budget #personal-budget-summary .budget-stat-note{font-size:.66rem}
+          #tab-budget .thai-forecast-row{grid-template-columns:1.5rem minmax(0,1fr) auto;gap:.45rem;padding:.6rem}
+          #tab-budget .thai-forecast-row>strong{font-size:.82rem}
+          #tab-budget .thai-forecast-actions{grid-column:1 / -1;justify-content:flex-start;flex-wrap:wrap}
+          #tab-budget .thai-forecast-actions button{flex:0 1 auto;font-size:.7rem;min-height:36px}
+          #tab-budget #thai-forecast-panel .grid.grid-cols-2.gap-2.sm\\:grid-cols-4{gap:.45rem}
+          #tab-budget #thai-forecast-panel .thai-forecast-stat{padding:.55rem}
+          #tab-budget #thai-forecast-panel .thai-forecast-stat strong{font-size:clamp(.85rem,3.5vw,1.05rem)}
+          #tab-budget .thai-expense-head{gap:.4rem}
+          #tab-budget .thai-expense-amount{font-size:.84rem}
+          #tab-budget .thai-expense-chevron{width:35px;min-width:35px;height:38px}
+        }
+        @media(max-width:360px){
+          #tab-budget #personal-budget-summary{grid-template-columns:1fr}
+          #tab-budget .thai-category-grid{font-size:.67rem;gap:.35rem}
+          #tab-budget .thai-forecast-actions button{padding:.3rem .4rem}
+        }
+
+        :root { --thai-card-gap: .85rem; }
+        [data-thai-fold-key]:not([data-thai-fold-key^="expense:"]) > .thai-fold-body {
+          display:flex;
+          flex-direction:column;
+          gap:var(--thai-card-gap);
+          min-width:0;
+        }
+        [data-thai-fold-key]:not([data-thai-fold-key^="expense:"]) > .thai-fold-body > * {
+          margin-top:0!important;
+          margin-bottom:0!important;
+          min-width:0;
+        }
+        [data-thai-fold-key^="day:"] > .thai-fold-body {
+          gap:var(--thai-card-gap);
+        }
+        [data-thai-fold-key$=":activities"] > .thai-fold-body {
+          gap:var(--thai-card-gap);
+        }
+        [data-thai-fold-key$=":activities"] > .thai-fold-body > .activity-detail {
+          margin:0!important;
+        }
+        #thai-forecast-list,
+        #expenses-list {
+          display:flex;
+          flex-direction:column;
+          gap:var(--thai-card-gap)!important;
+        }
+        #thai-forecast-list > *,
+        #expenses-list > * {
+          margin:0!important;
+        }
+        #tab-budget #thai-forecast-panel > .thai-fold-body {
+          gap:var(--thai-card-gap)!important;
+        }
+        #tab-budget #thai-forecast-panel > .thai-fold-body > .grid {
+          gap:var(--thai-card-gap)!important;
+        }
+        #tab-budget #thai-forecast-panel .thai-forecast-row {
+          margin:0!important;
+        }
+        #tab-budget section[aria-label="Quanto costa il viaggio a persona"] > .thai-fold-body {
+          gap:var(--thai-card-gap)!important;
+        }
+        #tab-budget #personal-budget-summary,
+        #tab-budget #split-summary-box {
+          gap:var(--thai-card-gap)!important;
+        }
+        #tab-budget .thai-forecast-row {
+          padding:.8rem .9rem;
+        }
+        #tab-budget .thai-forecast-row > .thai-forecast-actions {
+          margin-top:.1rem;
+        }
+        #tab-budget .thai-forecast-row + .thai-forecast-row {
+          margin-top:0!important;
+        }
+        #tab-budget .thai-expense-card {
+          margin:0!important;
+        }
+        #tab-budget .thai-forecast-stat,
+        #tab-budget #thai-forecast-panel .budget-stat {
+          margin:0;
+        }
+        @media(max-width:767px){
+          :root { --thai-card-gap:.7rem; }
+          #tab-budget #thai-forecast-panel > .thai-fold-body > .grid {
+            gap:.7rem!important;
+          }
+          #tab-budget #thai-forecast-panel .thai-forecast-row { padding:.7rem .75rem; }
+        }
+        .thai-activity-cost{margin:.35rem 0 0;font-size:.75rem;font-weight:650;color:#287665;line-height:1.35}.dark .thai-activity-cost{color:#99e2d0}
+
+        #notes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .thai-note-card {
+            margin: 0 !important;
+            min-width: 0;
+        }
+        .note-drag-handle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 30px;
+            height: 38px;
+            border-radius: 8px;
+            color: #477f8a;
+            font-size: 20px;
+            cursor: grab;
+            touch-action: none;
+            user-select: none;
+        }
+        .note-drag-handle:active {
+            cursor: grabbing;
+        }
+        .dark .note-drag-handle {
+            color: #9bd5d9;
+        }
+        .thai-note-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 4px;
+        }
+        .thai-note-order-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 34px;
+            min-height: 38px;
+            border-radius: 99px;
+            background: #d9eeef;
+            border: 1px solid #a9d3d7;
+            color: #245c66;
+            font-size: 16px;
+            font-weight: 800;
+        }
+        .dark .thai-note-order-btn {
+            background: #2c5360;
+            border-color: #608995;
+            color: #e6f8fa;
+        }
+        .thai-note-order-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+        @media (max-width: 480px) {
+            .thai-note-card { padding: 10px !important; }
+            .thai-note-card > div:first-child { flex-wrap: wrap; }
+            .note-drag-handle { width: 24px; }
+            .thai-note-order-btn { width: 31px; min-height: 36px; }
+        }

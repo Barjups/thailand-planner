@@ -1,8 +1,10 @@
 /* Thai Planner: static shell only. Never cache script.google.com responses or user data. */
-const CACHE_NAME='thai-planner-shell-v5';
+const CACHE_NAME='thai-planner-shell-v6';
 const SCOPE='/thailand-planner/';
 const BASE= SCOPE;
 const EXTERNAL_ASSETS=[
+  '/thailand-planner/app.js',
+  '/thailand-planner/styles.css',
   'https://cdn.tailwindcss.com',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
   'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap',
