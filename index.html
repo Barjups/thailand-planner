@@ -7,28 +7,17 @@
     <meta name="description" content="Planner Thailandia: itinerario, budget, hotel e attività. Le modifiche offline sono sincronizzate alla riconnessione.">
     
     <!-- Icona iPhone -->
-    <link rel="apple-touch-icon"
-          sizes="180x180"
-          href="/thailand-planner/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/thailand-planner/apple-touch-icon.png">
     
     <!-- Favicon -->
-    <link rel="icon"
-          type="image/png"
-          href="/thailand-planner/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/thailand-planner/apple-touch-icon.png">
     
     <!-- Configurazione iPhone -->
-    <meta name="apple-mobile-web-app-capable"
-          content="yes">
-    
-    <meta name="apple-mobile-web-app-title"
-          content="Thai Planner">
-    
-    <meta name="apple-mobile-web-app-status-bar-style"
-          content="default">
-    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Thai Planner">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="theme-color" content="#10242c">
     <script>
-      // Dark by default; preserve the visitor's explicit choice across sessions.
       (function () {
         var saved;
         try { saved = localStorage.getItem("thaiPlannerTheme"); } catch (e) {}
@@ -71,7 +60,6 @@
         .thai-pill { display:inline-block; border-radius:.5rem; padding:.15rem .4rem; background:#f1f5f9; font-size:.7rem; }
         .dark .thai-pill { background:#334155; }
 
-        /* Contrasto ottimizzato per la modalità notte, compreso il contenuto dinamico */
         .dark { color-scheme: dark; }
         .dark body { background-color: #10242c; color: #edf7f7; }
         .dark input, .dark textarea, .dark select {
@@ -102,8 +90,6 @@
         .dark a:hover { text-decoration: underline; }
         .dark button:focus-visible, .dark a:focus-visible { outline: 2px solid #8fddd5; outline-offset: 2px; }
 
-
-        /* Palette blu petrolio chiaro / acqua: notte morbida, contrasti leggibili */
         .dark .dark\:bg-slate-900 { background-color: #10242c !important; }
         .dark .dark\:bg-slate-800 { background-color: #1a3842 !important; }
         .dark .dark\:bg-slate-800\/90 { background-color: rgba(26,56,66,.94) !important; }
@@ -122,15 +108,11 @@
         .dark a { text-underline-offset: 2px; }
         @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
 
-
-
-        /* Thai Planner UI vNext: palette pastello con gerarchia cromatica leggibile */
         :root {
           --thai-sea:#81d5cf; --thai-ocean:#8ec6ed; --thai-peach:#f8cda9;
           --thai-lilac:#c6bbf2; --thai-sand:#f6dfb9;
         }
         @media (max-width: 767px) {
-          /* Permette l'ordine reale: menu > contenuto > voli > viaggiatrici. */
           #planner-sidebar { display:contents; }
           #planner-sidebar > nav { order:1; }
           main { order:2; }
@@ -192,542 +174,487 @@
         .tab-btn:focus-visible, button:focus-visible { outline:2px solid #75cdc4; outline-offset:3px; }
         @media (prefers-reduced-motion:reduce) { .tab-btn { transition:none; } }
 
-    
-    /* Dati importati dal vecchio foglio, gestibili senza aprire Sheets */
-    .thai-legacy {padding: 0.8rem; border-radius: .8rem; background:#fff8ec; border:1px solid #f2d9aa; color:#674d2c;}
-    .thai-help {font-size: .73rem; line-height:1.5; margin-top:.4rem; opacity:.88;}
-    html.dark .thai-legacy {background:#403b32; border-color:#857052; color:#f8e7c7;}
-    .thai-expense-icon {flex:none; display:inline-flex; justify-content:center; align-items:center; width:2.15rem;height:2.15rem;border-radius:.65rem;background:#e2f4f2;font-size:1.15rem;}
-    html.dark .thai-expense-icon {background:#30565b;}
-    .todo-drag-handle:active {cursor:grabbing;}
+        .thai-legacy {padding: 0.8rem; border-radius: .8rem; background:#fff8ec; border:1px solid #f2d9aa; color:#674d2c;}
+        .thai-help {font-size: .73rem; line-height:1.5; margin-top:.4rem; opacity:.88;}
+        html.dark .thai-legacy {background:#403b32; border-color:#857052; color:#f8e7c7;}
+        .thai-expense-icon {flex:none; display:inline-flex; justify-content:center; align-items:center; width:2.15rem;height:2.15rem;border-radius:.65rem;background:#e2f4f2;font-size:1.15rem;}
+        html.dark .thai-expense-icon {background:#30565b;}
+        .todo-drag-handle:active {cursor:grabbing;}
 
-/* Controlli collassabili (senza alterare i dati salvati) */
-.thai-fold-toggle{display:inline-flex;align-items:center;justify-content:center;gap:.35rem;min-height:36px;padding:.4rem .65rem;border:1px solid #a3c8c6;border-radius:.7rem;background:#e8f6f3;color:#205b60;font-weight:700;font-size:.76rem;cursor:pointer;white-space:nowrap}
-.dark .thai-fold-toggle{background:#254750;border-color:#547982;color:#d5f8f2}
-.thai-fold-toggle:hover{filter:brightness(.96)}
-.thai-fold-toggle:focus-visible{outline:2px solid #58bfb8;outline-offset:3px}
-.thai-fold-header{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-bottom:.6rem}
-.thai-fold-body[hidden]{display:none!important}
-.thai-fold-collapsed{margin-bottom:0!important}
-.thai-global-folds{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin:.4rem 0 .7rem}
-.thai-fold-shell{min-width:0}
-@media(max-width:767px){.thai-fold-toggle{min-height:42px}.thai-global-folds button{flex:1}}
+        .thai-fold-toggle{display:inline-flex;align-items:center;justify-content:center;gap:.35rem;min-height:36px;padding:.4rem .65rem;border:1px solid #a3c8c6;border-radius:.7rem;background:#e8f6f3;color:#205b60;font-weight:700;font-size:.76rem;cursor:pointer;white-space:nowrap}
+        .dark .thai-fold-toggle{background:#254750;border-color:#547982;color:#d5f8f2}
+        .thai-fold-toggle:hover{filter:brightness(.96)}
+        .thai-fold-toggle:focus-visible{outline:2px solid #58bfb8;outline-offset:3px}
+        .thai-fold-header{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-bottom:.6rem}
+        .thai-fold-body[hidden]{display:none!important}
+        .thai-fold-collapsed{margin-bottom:0!important}
+        .thai-global-folds{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin:.4rem 0 .7rem}
+        .thai-fold-shell{min-width:0}
+        @media(max-width:767px){.thai-fold-toggle{min-height:42px}.thai-global-folds button{flex:1}}
 
-/* Pulsanti Comprimi/Espandi: colore per tipologia di blocco e stato. */
-.thai-fold-toggle { transition: background-color .16s, border-color .16s, color .16s; }
-.thai-global-folds .thai-fold-toggle { background:#dceeea; color:#195960; border-color:#81b9b5; }
-.dark .thai-global-folds .thai-fold-toggle { background:#25545a; color:#e0fcf8; border-color:#6aa9a5; }
-/* Giornate: azzurro polvere */
-[data-thai-fold-key^="day:"] > :not(.thai-fold-body) .thai-fold-toggle { background:#e2f1fc; color:#205574; border-color:#9fc8df; }
-.dark [data-thai-fold-key^="day:"] > :not(.thai-fold-body) .thai-fold-toggle { background:#315a70; color:#edf9ff; border-color:#719db6; }
-/* Hotel: salvia */
-[data-thai-fold-key$=":hotel"] > .thai-fold-header .thai-fold-toggle { background:#e1f3e7; color:#205e44; border-color:#a3d3b4; }
-.dark [data-thai-fold-key$=":hotel"] > .thai-fold-header .thai-fold-toggle { background:#34634f; color:#edfff4; border-color:#77ae90; }
-/* Trasporti: blu */
-[data-thai-fold-key$=":transports"] > .thai-fold-header .thai-fold-toggle { background:#e5f2ff; color:#235779; border-color:#a5c9e8; }
-.dark [data-thai-fold-key$=":transports"] > .thai-fold-header .thai-fold-toggle { background:#365d78; color:#f0faff; border-color:#7ca8c5; }
-/* Attivita e note: lavanda */
-[data-thai-fold-key$=":activities"] > .thai-fold-header .thai-fold-toggle,
-[data-thai-fold-key^="note:"] > .thai-fold-header .thai-fold-toggle { background:#f1eafd; color:#65478d; border-color:#cbb9e6; }
-.dark [data-thai-fold-key$=":activities"] > .thai-fold-header .thai-fold-toggle,
-.dark [data-thai-fold-key^="note:"] > .thai-fold-header .thai-fold-toggle { background:#584c76; color:#fbf2ff; border-color:#9585b4; }
-/* Voli: pesca chiaro */
-[data-thai-fold-key="flights"] > .thai-fold-header .thai-fold-toggle { background:#fff0db; color:#855522; border-color:#eec891; }
-.dark [data-thai-fold-key="flights"] > .thai-fold-header .thai-fold-toggle { background:#6c533b; color:#ffefdc; border-color:#ba946f; }
-/* Viaggiatrici: rosa cipria */
-[data-thai-fold-key="travellers"] > .thai-fold-header .thai-fold-toggle { background:#fbe9ef; color:#854e69; border-color:#e7b9ca; }
-.dark [data-thai-fold-key="travellers"] > .thai-fold-header .thai-fold-toggle { background:#664b62; color:#fff0f6; border-color:#ab839e; }
-/* Budget: verde acqua; To Do: azzurro */
-[data-thai-fold-key^="budget:"] > .thai-fold-header .thai-fold-toggle,
-[data-thai-fold-key^="expense:"] > .thai-fold-header .thai-fold-toggle { background:#e1f4ed; color:#22644d; border-color:#a4d6c4; }
-.dark [data-thai-fold-key^="budget:"] > .thai-fold-header .thai-fold-toggle,
-.dark [data-thai-fold-key^="expense:"] > .thai-fold-header .thai-fold-toggle { background:#315e55; color:#eafff7; border-color:#79afa2; }
-[data-thai-fold-key^="todo:"] > .thai-fold-header .thai-fold-toggle { background:#e8f2fb; color:#29567c; border-color:#adcbe6; }
-.dark [data-thai-fold-key^="todo:"] > .thai-fold-header .thai-fold-toggle { background:#34556b; color:#eaf8ff; border-color:#83a9c5; }
-/* Stato chiuso leggermente piu saturo, per distinguere Espandi da Comprimi. */
-.thai-fold-collapsed > .thai-fold-header .thai-fold-toggle,
-.thai-fold-collapsed > :not(.thai-fold-body) .thai-fold-toggle { box-shadow:inset 0 0 0 1px currentColor; }
-.thai-fold-toggle:focus-visible { outline:3px solid #73cfc5; outline-offset:2px; }
-@media (prefers-reduced-motion:reduce){.thai-fold-toggle{transition:none}}
+        .thai-fold-toggle { transition: background-color .16s, border-color .16s, color .16s; }
+        .thai-global-folds .thai-fold-toggle { background:#dceeea; color:#195960; border-color:#81b9b5; }
+        .dark .thai-global-folds .thai-fold-toggle { background:#25545a; color:#e0fcf8; border-color:#6aa9a5; }
+        [data-thai-fold-key^="day:"] > :not(.thai-fold-body) .thai-fold-toggle { background:#e2f1fc; color:#205574; border-color:#9fc8df; }
+        .dark [data-thai-fold-key^="day:"] > :not(.thai-fold-body) .thai-fold-toggle { background:#315a70; color:#edf9ff; border-color:#719db6; }
+        [data-thai-fold-key$=":hotel"] > .thai-fold-header .thai-fold-toggle { background:#e1f3e7; color:#205e44; border-color:#a3d3b4; }
+        .dark [data-thai-fold-key$=":hotel"] > .thai-fold-header .thai-fold-toggle { background:#34634f; color:#edfff4; border-color:#77ae90; }
+        [data-thai-fold-key$=":transports"] > .thai-fold-header .thai-fold-toggle { background:#e5f2ff; color:#235779; border-color:#a5c9e8; }
+        .dark [data-thai-fold-key$=":transports"] > .thai-fold-header .thai-fold-toggle { background:#365d78; color:#f0faff; border-color:#7ca8c5; }
+        [data-thai-fold-key$=":activities"] > .thai-fold-header .thai-fold-toggle,
+        [data-thai-fold-key^="note:"] > .thai-fold-header .thai-fold-toggle { background:#f1eafd; color:#65478d; border-color:#cbb9e6; }
+        .dark [data-thai-fold-key$=":activities"] > .thai-fold-header .thai-fold-toggle,
+        .dark [data-thai-fold-key^="note:"] > .thai-fold-header .thai-fold-toggle { background:#584c76; color:#fbf2ff; border-color:#9585b4; }
+        [data-thai-fold-key="flights"] > .thai-fold-header .thai-fold-toggle { background:#fff0db; color:#855522; border-color:#eec891; }
+        .dark [data-thai-fold-key="flights"] > .thai-fold-header .thai-fold-toggle { background:#6c533b; color:#ffefdc; border-color:#ba946f; }
+        [data-thai-fold-key="travellers"] > .thai-fold-header .thai-fold-toggle { background:#fbe9ef; color:#854e69; border-color:#e7b9ca; }
+        .dark [data-thai-fold-key="travellers"] > .thai-fold-header .thai-fold-toggle { background:#664b62; color:#fff0f6; border-color:#ab839e; }
+        [data-thai-fold-key^="budget:"] > .thai-fold-header .thai-fold-toggle,
+        [data-thai-fold-key^="expense:"] > .thai-fold-header .thai-fold-toggle { background:#e1f4ed; color:#22644d; border-color:#a4d6c4; }
+        .dark [data-thai-fold-key^="budget:"] > .thai-fold-header .thai-fold-toggle,
+        .dark [data-thai-fold-key^="expense:"] > .thai-fold-header .thai-fold-toggle { background:#315e55; color:#eafff7; border-color:#79afa2; }
+        [data-thai-fold-key^="todo:"] > .thai-fold-header .thai-fold-toggle { background:#e8f2fb; color:#29567c; border-color:#adcbe6; }
+        .dark [data-thai-fold-key^="todo:"] > .thai-fold-header .thai-fold-toggle { background:#34556b; color:#eaf8ff; border-color:#83a9c5; }
+        .thai-fold-collapsed > .thai-fold-header .thai-fold-toggle,
+        .thai-fold-collapsed > :not(.thai-fold-body) .thai-fold-toggle { box-shadow:inset 0 0 0 1px currentColor; }
+        .thai-fold-toggle:focus-visible { outline:3px solid #73cfc5; outline-offset:2px; }
+        @media (prefers-reduced-motion:reduce){.thai-fold-toggle{transition:none}}
 
+        .thai-global-folds .thai-fold-toggle.thai-global-collapse {background:#e3f0fa;color:#205576;border-color:#9bc5e3;}
+        .thai-global-folds .thai-fold-toggle.thai-global-expand {background:#ddf2e8;color:#1c694f;border-color:#90cbb2;}
+        .dark .thai-global-folds .thai-fold-toggle.thai-global-collapse {background:#36576c;color:#e1f1ff;border-color:#608ba4;}
+        .dark .thai-global-folds .thai-fold-toggle.thai-global-expand {background:#27665a;color:#e1fff5;border-color:#62a99b;}
+        .thai-linked-stay {padding:.7rem .9rem!important;}
+        .thai-linked-stay-summary {display:flex;align-items:center;justify-content:space-between;gap:.8rem;cursor:pointer;list-style:none;min-height:46px;}
+        .thai-linked-stay-summary::-webkit-details-marker{display:none;}
+        .thai-linked-stay-main {display:flex;flex-direction:column;gap:.25rem;min-width:0;line-height:1.35;}
+        .thai-linked-stay-main strong{font-size:.86rem;}
+        .thai-linked-stay-main small{font-size:.73rem;opacity:.82;overflow-wrap:anywhere;}
+        .thai-linked-stay-hint{display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap;font-size:.72rem;font-weight:700;padding:.4rem .55rem;border-radius:.65rem;background:#dff2e6;color:#225b44;border:1px solid #a3d4b5;}
+        .dark .thai-linked-stay-hint{background:#34634f;color:#edfff4;border-color:#77ae90;}
+        .thai-linked-stay-chevron {display:inline-block;transition:transform .16s ease;}
+        .thai-linked-stay[open] .thai-linked-stay-chevron {transform:rotate(180deg);}
+        .thai-linked-stay-details {border-top:1px solid rgba(120,169,150,.45);margin-top:.7rem;padding-top:.8rem;}
+        .thai-linked-stay-summary:focus-visible {outline:3px solid #73cfc5;outline-offset:3px;border-radius:.4rem;}
+        @media(max-width:480px){.thai-linked-stay-summary{align-items:flex-start}.thai-linked-stay-hint{margin-top:.1rem}}
 
-/* Differenzia le azioni globali: blu = riduci, verde = mostra. */
-.thai-global-folds .thai-fold-toggle.thai-global-collapse {background:#e3f0fa;color:#205576;border-color:#9bc5e3;}
-.thai-global-folds .thai-fold-toggle.thai-global-expand {background:#ddf2e8;color:#1c694f;border-color:#90cbb2;}
-.dark .thai-global-folds .thai-fold-toggle.thai-global-collapse {background:#36576c;color:#e1f1ff;border-color:#608ba4;}
-.dark .thai-global-folds .thai-fold-toggle.thai-global-expand {background:#27665a;color:#e1fff5;border-color:#62a99b;}
-/* Le giornate successive mostrano solo il promemoria hotel, con dettagli a richiesta. */
-.thai-linked-stay {padding:.7rem .9rem!important;}
-.thai-linked-stay-summary {display:flex;align-items:center;justify-content:space-between;gap:.8rem;cursor:pointer;list-style:none;min-height:46px;}
-.thai-linked-stay-summary::-webkit-details-marker{display:none;}
-.thai-linked-stay-main {display:flex;flex-direction:column;gap:.25rem;min-width:0;line-height:1.35;}
-.thai-linked-stay-main strong{font-size:.86rem;}
-.thai-linked-stay-main small{font-size:.73rem;opacity:.82;overflow-wrap:anywhere;}
-.thai-linked-stay-hint{display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap;font-size:.72rem;font-weight:700;padding:.4rem .55rem;border-radius:.65rem;background:#dff2e6;color:#225b44;border:1px solid #a3d4b5;}
-.dark .thai-linked-stay-hint{background:#34634f;color:#edfff4;border-color:#77ae90;}
-.thai-linked-stay-chevron {display:inline-block;transition:transform .16s ease;}
-.thai-linked-stay[open] .thai-linked-stay-chevron {transform:rotate(180deg);}
-.thai-linked-stay-details {border-top:1px solid rgba(120,169,150,.45);margin-top:.7rem;padding-top:.8rem;}
-.thai-linked-stay-summary:focus-visible {outline:3px solid #73cfc5;outline-offset:3px;border-radius:.4rem;}
-@media(max-width:480px){.thai-linked-stay-summary{align-items:flex-start}.thai-linked-stay-hint{margin-top:.1rem}}
+        .thai-expense-card{background:#f1f7f8;border:1px solid #cadfe0;color:#1c3742;}
+        .dark .thai-expense-card{background:#213e4b;border-color:#42616c;color:#eef8fa;}
+        .thai-expense-head{display:flex;align-items:center;gap:.75rem;flex-wrap:nowrap;margin:0!important;}
+        .thai-expense-main{display:flex;flex:1;flex-direction:column;gap:.15rem;min-width:0;}
+        .thai-expense-name{font-size:.91rem;overflow-wrap:anywhere;line-height:1.3;}
+        .thai-expense-meta{font-size:.75rem;color:#506d77;overflow-wrap:anywhere;}
+        .dark .thai-expense-meta{color:#b9d2d9;}
+        .thai-expense-amount{font-size:1rem;white-space:nowrap;font-variant-numeric:tabular-nums;}
+        .thai-expense-chevron{width:38px;min-width:38px;height:38px;padding:0!important;border-radius:10px!important;background:#d9eeec!important;color:#235c63!important;border-color:#91c7c2!important;font-size:1.05rem!important;}
+        .dark .thai-expense-chevron{background:#315c62!important;color:#e9fbf8!important;border-color:#69a5a3!important;}
+        .thai-expense-details{margin-top:.75rem;padding-top:.75rem;border-top:1px solid #bdd4d9;}
+        .dark .thai-expense-details{border-color:#476672;}
+        .thai-expense-split{display:flex;flex-wrap:wrap;gap:.35rem;font-size:.78rem;color:#415f68;}
+        .dark .thai-expense-split{color:#d0e2e6;}
+        .thai-expense-actions{display:flex;justify-content:flex-end;gap:.5rem;margin-top:.75rem;}
+        .thai-expense-actions button{min-height:40px;padding:.45rem .8rem;border-radius:.6rem;font-size:.78rem;font-weight:700;}
+        .thai-expense-edit{background:#d9edf2;color:#24596b;}
+        .dark .thai-expense-edit{background:#295a68;color:#e3f6fa;}
+        .thai-expense-delete{background:#fae5e8;color:#913c52;}
+        .dark .thai-expense-delete{background:#543e49;color:#ffe5ec;}
+        @media(max-width:480px){.thai-expense-head{gap:.5rem}.thai-expense-icon{width:2rem;height:2rem}.thai-expense-amount{font-size:.88rem}.thai-expense-meta{font-size:.7rem}.thai-expense-chevron{width:40px;min-width:40px}}
 
+        .thai-hotel-name strong{font-size:1rem;line-height:1.5;font-weight:800;overflow-wrap:anywhere}
+        .thai-hotel-map-link{display:inline-flex;align-items:baseline;gap:.35rem;max-width:100%;color:#176b76;text-decoration:underline;text-underline-offset:3px;font-weight:650;overflow-wrap:anywhere;padding:.2rem 0}
+        .dark .thai-hotel-map-link{color:#a5ece3}
+        .thai-hotel-map-link:hover{filter:brightness(1.15)}
+        .thai-hotel-map-link:focus-visible{outline:3px solid #68cbbc;outline-offset:3px;border-radius:.25rem}
 
-/* Budget: card compatte, titolo e importo visibili, dettagli su richiesta. */
-.thai-expense-card{background:#f1f7f8;border:1px solid #cadfe0;color:#1c3742;}
-.dark .thai-expense-card{background:#213e4b;border-color:#42616c;color:#eef8fa;}
-.thai-expense-head{display:flex;align-items:center;gap:.75rem;flex-wrap:nowrap;margin:0!important;}
-.thai-expense-main{display:flex;flex:1;flex-direction:column;gap:.15rem;min-width:0;}
-.thai-expense-name{font-size:.91rem;overflow-wrap:anywhere;line-height:1.3;}
-.thai-expense-meta{font-size:.75rem;color:#506d77;overflow-wrap:anywhere;}
-.dark .thai-expense-meta{color:#b9d2d9;}
-.thai-expense-amount{font-size:1rem;white-space:nowrap;font-variant-numeric:tabular-nums;}
-.thai-expense-chevron{width:38px;min-width:38px;height:38px;padding:0!important;border-radius:10px!important;background:#d9eeec!important;color:#235c63!important;border-color:#91c7c2!important;font-size:1.05rem!important;}
-.dark .thai-expense-chevron{background:#315c62!important;color:#e9fbf8!important;border-color:#69a5a3!important;}
-.thai-expense-details{margin-top:.75rem;padding-top:.75rem;border-top:1px solid #bdd4d9;}
-.dark .thai-expense-details{border-color:#476672;}
-.thai-expense-split{display:flex;flex-wrap:wrap;gap:.35rem;font-size:.78rem;color:#415f68;}
-.dark .thai-expense-split{color:#d0e2e6;}
-.thai-expense-actions{display:flex;justify-content:flex-end;gap:.5rem;margin-top:.75rem;}
-.thai-expense-actions button{min-height:40px;padding:.45rem .8rem;border-radius:.6rem;font-size:.78rem;font-weight:700;}
-.thai-expense-edit{background:#d9edf2;color:#24596b;}
-.dark .thai-expense-edit{background:#295a68;color:#e3f6fa;}
-.thai-expense-delete{background:#fae5e8;color:#913c52;}
-.dark .thai-expense-delete{background:#543e49;color:#ffe5ec;}
-@media(max-width:480px){.thai-expense-head{gap:.5rem}.thai-expense-icon{width:2rem;height:2rem}.thai-expense-amount{font-size:.88rem}.thai-expense-meta{font-size:.7rem}.thai-expense-chevron{width:40px;min-width:40px}}
+        .thai-night-tag{display:inline-flex;align-items:center;padding:.23rem .55rem;border-radius:999px;font-size:.72rem;font-weight:750;background:#dff1e7;color:#24654e;border:1px solid #b1dcca}
+        .dark .thai-night-tag{background:#315b50;color:#def8ec;border-color:#6b9e88}
+        .thai-change-route{border:1px solid #a5c4cf;border-radius:1rem;padding:.8rem;background:#f2f8fa;color:#224b59}
+        .dark .thai-change-route{background:#233b4a;border-color:#547588;color:#e4f3f7}
+        .thai-change-route-item{display:flex;align-items:flex-start;gap:.6rem;padding:.4rem 0;font-size:.82rem}
+        .thai-change-route-dot{width:1.5rem;height:1.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#d9edf1;flex:none}
+        .dark .thai-change-route-dot{background:#345867}
+        .thai-todo-row{display:flex;align-items:center;gap:.7rem;border-radius:.9rem;padding:.75rem .8rem!important;border:1px solid #cbdfe3;background:#f8fbfc!important;min-height:62px}
+        .dark .thai-todo-row{background:#213b47!important;border-color:#486775!important}
+        .thai-todo-row.is-done{opacity:.72}
+        .thai-todo-check{width:21px;height:21px;accent-color:#2b877d;flex:none}
+        .thai-todo-main{flex:1;min-width:0}
+        .thai-todo-text{display:block;font-size:.9rem;font-weight:650;line-height:1.3;overflow-wrap:anywhere}
+        .thai-todo-meta{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.25rem}
+        .thai-todo-chip{display:inline-block;padding:.13rem .5rem;border-radius:99px;font-size:.7rem;font-weight:650;background:#e5eff5;color:#36576c}
+        .dark .thai-todo-chip{background:#365362;color:#e3eff6}
+        .thai-todo-drag{font-size:1.2rem;color:#658895;cursor:grab;touch-action:none;user-select:none;padding:.45rem;flex:none}
+        .thai-todo-action{width:39px;height:39px;border-radius:.65rem;display:inline-flex;align-items:center;justify-content:center;background:#e2f0ef;color:#205b59;border:1px solid #c4dbd8;flex:none}
+        .dark .thai-todo-action{background:#315865;color:#e2f5fa;border-color:#56828c}
+        .thai-todo-action.danger{background:#f8eaed;color:#9e4759;border-color:#ecc7cf}
+        .dark .thai-todo-action.danger{background:#533b48;color:#ffe4ed;border-color:#805c69}
+        .thai-todo-toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem}
+        .thai-todo-progress{height:6px;background:#d8e7e7;border-radius:10px;overflow:hidden;margin-bottom:1rem}
+        .thai-todo-progress>div{background:#4aada0;height:100%;transition:width .2s}
+        @media(max-width:480px){.thai-todo-row{gap:.35rem;padding:.55rem!important}.thai-todo-action{width:34px;height:36px}.thai-todo-drag{padding:.24rem}.thai-todo-text{font-size:.84rem}}
 
-/* Hotel: nome evidente e indirizzo apribile in Maps. */
-.thai-hotel-name strong{font-size:1rem;line-height:1.5;font-weight:800;overflow-wrap:anywhere}
-.thai-hotel-map-link{display:inline-flex;align-items:baseline;gap:.35rem;max-width:100%;color:#176b76;text-decoration:underline;text-underline-offset:3px;font-weight:650;overflow-wrap:anywhere;padding:.2rem 0}
-.dark .thai-hotel-map-link{color:#a5ece3}
-.thai-hotel-map-link:hover{filter:brightness(1.15)}
-.thai-hotel-map-link:focus-visible{outline:3px solid #68cbbc;outline-offset:3px;border-radius:.25rem}
+        @media (max-width: 767px) {
+          #tab-itinerary .thai-global-folds { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:.5rem; width:100%; }
+          #tab-itinerary .thai-global-folds .thai-fold-toggle { min-width:0; white-space:normal; line-height:1.25; padding:.65rem .35rem; min-height:46px; text-align:center; }
+          #days-container .thai-day-header { display:flex; flex-wrap:wrap; align-items:flex-start; gap:.55rem; }
+          #days-container .thai-day-header > :first-child { min-width:0; flex:1 1 145px; }
+          #days-container .thai-day-actions { display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:.4rem; flex:1 1 100%; width:100%; }
+          #days-container .thai-day-collapse-action { min-width:112px; min-height:44px; flex:0 0 auto; }
+          #days-container .thai-fold-header { min-width:0; gap:.4rem; }
+          #days-container .thai-fold-header > :first-child { min-width:0; overflow-wrap:anywhere; }
+          #days-container .thai-fold-header .thai-fold-toggle { flex:0 0 auto; min-height:44px; }
+        }
+        @media (max-width:360px) {
+          #tab-itinerary .thai-global-folds { grid-template-columns:minmax(0,1fr); }
+        }
 
-/* Hotel: numero notte e navigazione */
-.thai-night-tag{display:inline-flex;align-items:center;padding:.23rem .55rem;border-radius:999px;font-size:.72rem;font-weight:750;background:#dff1e7;color:#24654e;border:1px solid #b1dcca}
-.dark .thai-night-tag{background:#315b50;color:#def8ec;border-color:#6b9e88}
-.thai-change-route{border:1px solid #a5c4cf;border-radius:1rem;padding:.8rem;background:#f2f8fa;color:#224b59}
-.dark .thai-change-route{background:#233b4a;border-color:#547588;color:#e4f3f7}
-.thai-change-route-item{display:flex;align-items:flex-start;gap:.6rem;padding:.4rem 0;font-size:.82rem}
-.thai-change-route-dot{width:1.5rem;height:1.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#d9edf1;flex:none}
-.dark .thai-change-route-dot{background:#345867}
-/* To Do: elenco compatto, senza shell comprimi per ogni voce */
-.thai-todo-row{display:flex;align-items:center;gap:.7rem;border-radius:.9rem;padding:.75rem .8rem!important;border:1px solid #cbdfe3;background:#f8fbfc!important;min-height:62px}
-.dark .thai-todo-row{background:#213b47!important;border-color:#486775!important}
-.thai-todo-row.is-done{opacity:.72}
-.thai-todo-check{width:21px;height:21px;accent-color:#2b877d;flex:none}
-.thai-todo-main{flex:1;min-width:0}
-.thai-todo-text{display:block;font-size:.9rem;font-weight:650;line-height:1.3;overflow-wrap:anywhere}
-.thai-todo-meta{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.25rem}
-.thai-todo-chip{display:inline-block;padding:.13rem .5rem;border-radius:99px;font-size:.7rem;font-weight:650;background:#e5eff5;color:#36576c}
-.dark .thai-todo-chip{background:#365362;color:#e3eff6}
-.thai-todo-drag{font-size:1.2rem;color:#658895;cursor:grab;touch-action:none;user-select:none;padding:.45rem;flex:none}
-.thai-todo-action{width:39px;height:39px;border-radius:.65rem;display:inline-flex;align-items:center;justify-content:center;background:#e2f0ef;color:#205b59;border:1px solid #c4dbd8;flex:none}
-.dark .thai-todo-action{background:#315865;color:#e2f5fa;border-color:#56828c}
-.thai-todo-action.danger{background:#f8eaed;color:#9e4759;border-color:#ecc7cf}
-.dark .thai-todo-action.danger{background:#533b48;color:#ffe4ed;border-color:#805c69}
-.thai-todo-toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem}
-.thai-todo-progress{height:6px;background:#d8e7e7;border-radius:10px;overflow:hidden;margin-bottom:1rem}
-.thai-todo-progress>div{background:#4aada0;height:100%;transition:width .2s}
-@media(max-width:480px){.thai-todo-row{gap:.35rem;padding:.55rem!important}.thai-todo-action{width:34px;height:36px}.thai-todo-drag{padding:.24rem}.thai-todo-text{font-size:.84rem}}
+        .thai-forecast-stat { background:rgba(255,255,255,.72);border:1px solid #b5d9dd;border-radius:.85rem;padding:.7rem;display:flex;flex-direction:column;gap:.35rem;min-width:0 }
+        .thai-forecast-stat span { font-size:.7rem;color:#34566b;font-weight:600 }
+        .thai-forecast-stat strong { font-size:clamp(.95rem,2vw,1.25rem);font-variant-numeric:tabular-nums;overflow-wrap:anywhere }
+        .dark .thai-forecast-stat{background:#244650;border-color:#487982}
+        .dark .thai-forecast-stat span{color:#c3e9ea}
+        .thai-forecast-row { display:flex;align-items:center;flex-wrap:wrap;gap:.65rem;border:1px solid #c4dadb;border-radius:.85rem;padding:.7rem;background:rgba(255,255,255,.65) }
+        .dark .thai-forecast-row{background:#203a49;border-color:#496e77}
+        .thai-forecast-actions{display:flex;gap:.3rem;flex-wrap:wrap;width:100%;justify-content:flex-end}
+        .thai-forecast-actions button {min-height:40px;padding:.4rem .65rem;border-radius:.65rem;border:1px solid #a9cfd0;font-size:.78rem;font-weight:600}
+        .dark .thai-forecast-actions button {border-color:#67939c;color:#e4f8f7}
+        #thai-forecast-modal .thai-field {width:100%;display:block;margin-top:.35rem;min-height:44px}
+        @media(max-width:767px){
+          #tab-budget > div {padding:1rem!important}
+          #tab-budget .budget-stat {min-height:0;padding:.85rem}
+          #tab-budget .budget-stat-value {font-size:1.25rem}
+          #thai-forecast-panel {padding:.85rem}
+          .thai-forecast-row > strong {margin-left:auto}
+          .thai-forecast-actions {justify-content:flex-start}
+          .thai-forecast-actions button {flex:1 1 auto}
+          #tab-itinerary button, #tab-budget button, #tab-notes button, #tab-checklist button {touch-action:manipulation}
+        }
+        @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
-/* Mobile: non nascondere i controlli Comprimi/Espandi dietro le azioni giornata. */
-@media (max-width: 767px) {
-  #tab-itinerary .thai-global-folds { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:.5rem; width:100%; }
-  #tab-itinerary .thai-global-folds .thai-fold-toggle { min-width:0; white-space:normal; line-height:1.25; padding:.65rem .35rem; min-height:46px; text-align:center; }
-  #days-container .thai-day-header { display:flex; flex-wrap:wrap; align-items:flex-start; gap:.55rem; }
-  #days-container .thai-day-header > :first-child { min-width:0; flex:1 1 145px; }
-  #days-container .thai-day-actions { display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:.4rem; flex:1 1 100%; width:100%; }
-  #days-container .thai-day-collapse-action { min-width:112px; min-height:44px; flex:0 0 auto; }
-  #days-container .thai-fold-header { min-width:0; gap:.4rem; }
-  #days-container .thai-fold-header > :first-child { min-width:0; overflow-wrap:anywhere; }
-  #days-container .thai-fold-header .thai-fold-toggle { flex:0 0 auto; min-height:44px; }
-}
-@media (max-width:360px) {
-  #tab-itinerary .thai-global-folds { grid-template-columns:minmax(0,1fr); }
-}
+        .thai-header{
+          display:grid;
+          grid-template-columns:minmax(0,1fr) minmax(0,auto) auto;
+          grid-template-areas:"brand converter tools";
+          gap:.75rem 1rem;
+          align-items:center;
+        }
+        .thai-header-brand{grid-area:brand}
+        .thai-header-actions{display:contents}
+        .thai-converter{grid-area:converter;justify-content:flex-end}
+        .thai-header-tools{grid-area:tools;justify-content:flex-end}
+        .thai-title-mobile{display:none}
+        .thai-header-title{min-width:0;font-size:1rem;line-height:1.25;flex-wrap:wrap;column-gap:.5rem;row-gap:.2rem}
+        #sync-status{display:inline-flex;align-items:center;max-width:100%;white-space:normal;line-height:1.2}
+        .thai-header-tools>button,.thai-header-tools>details>summary{border:1px solid transparent}
+        .thai-header-tools>button:hover,.thai-header-tools>details>summary:hover{border-color:#b7d8d6}
+        .thai-header-tools>button:focus-visible,.thai-header-tools>details>summary:focus-visible{outline:2px solid #60bfb5;outline-offset:2px}
+        .thai-converter #thai-rate-label{white-space:normal;line-height:1.25;font-variant-numeric:tabular-nums}
+        .thai-converter input{font-variant-numeric:tabular-nums}
+        #thai-tools-menu[open]>summary{background:#e1f2ef;color:#205c62}
+        .dark #thai-tools-menu[open]>summary{background:#315b62;color:#dffbf4}
 
+        #planner-sidebar .planner-nav,#planner-sidebar .flight-card,#planner-sidebar .travellers-card,
+        #days-container .day-card,.day-summary-card,#tab-budget>div,#tab-notes>div,#tab-checklist>div{
+          border-radius:1rem;
+        }
+        #days-container .day-card{padding:1rem;min-width:0}
+        #days-container .day-card>div{min-width:0}
+        #days-container .day-card h3{font-size:1rem;line-height:1.4;overflow-wrap:anywhere}
+        #days-container .day-card .thai-section{border-radius:.85rem;padding:.8rem;line-height:1.55}
+        #days-container .activity-detail{line-height:1.5}
+        #days-container .thai-legacy{line-height:1.5}
+        #days-container .day-card a{overflow-wrap:anywhere}
+        .planner-nav .tab-btn{border-radius:.8rem;font-size:.875rem;line-height:1.35}
+        .thai-action{line-height:1.3;white-space:normal;text-align:center;justify-content:center;max-width:100%;transition:background-color .15s ease,filter .15s ease}
+        .thai-budget-link,.dark .thai-budget-link{
+          display:inline-flex!important;
+          width:auto!important;
+          min-height:30px!important;
+          max-width:max-content;
+          padding:.25rem .5rem!important;
+          font-size:.7rem!important;
+          font-weight:650!important;
+          line-height:1.15!important;
+          border-radius:.5rem!important;
+          vertical-align:middle;
+          white-space:nowrap;
+        }
+        .thai-budget-link{background:#e0f1ea!important;color:#27664f!important;border:1px solid #bedeca}
+        .dark .thai-budget-link{background:#285548!important;color:#dbf8eb!important;border:1px solid #4e8572}
+        .thai-budget-link{margin-left:.65rem!important;margin-top:.35rem!important;margin-bottom:.15rem!important;gap:.2rem!important}
+        .thai-budget-link:hover{filter:brightness(.95)}
+        #tab-budget .budget-stat{min-width:0}
+        #tab-budget .budget-stat-value{overflow-wrap:anywhere}
+        #tab-budget .thai-forecast-row{gap:.6rem}
+        #tab-budget .thai-forecast-actions button{min-height:36px}
+        .thai-modal-panel,.thai-flight-modal-panel{border-radius:1rem}
+        .thai-field{max-width:100%}
+        @media(min-width:768px) and (max-width:1100px){
+          .thai-header{
+            grid-template-columns:minmax(0,1fr) auto;
+            grid-template-areas:"brand tools" "converter converter";
+          }
+          .thai-converter{justify-content:flex-start;flex-wrap:wrap}
+          .thai-header-tools{justify-content:flex-end}
+        }
+        @media(min-width:1101px){
+          .thai-header{grid-template-columns:minmax(190px,1fr) auto auto}
+          .thai-converter{flex-wrap:nowrap}
+          #days-container .day-card{padding:1.1rem 1.25rem}
+          .planner-nav .tab-btn:hover{background:rgba(79,157,150,.12)}
+        }
+        @media(max-width:767px){
+          .thai-header{
+            grid-template-columns:minmax(0,1fr) auto;
+            grid-template-areas:"brand tools" "converter converter";
+            padding:.65rem .8rem;
+            column-gap:.35rem;row-gap:.55rem;
+          }
+          .thai-title-desktop,.thai-header-subtitle{display:none}
+          .thai-title-mobile{display:inline}
+          .thai-header-title{font-size:.9rem;gap:.25rem;align-items:center}
+          .thai-header-flag{padding:.4rem}
+          .thai-header-flag svg{width:25px;height:17px}
+          #sync-status{font-size:.6rem;padding:.1rem .4rem}
+          .thai-header-brand{gap:.5rem}
+          .thai-header-tools{gap:0}
+          .thai-header-tools>button,.thai-header-tools>details>summary{min-width:40px;min-height:40px;padding:.55rem}
+          .thai-converter{justify-content:space-between;gap:.4rem;flex-wrap:nowrap;width:100%}
+          .thai-converter>div{padding:.25rem .4rem;gap:.3rem;min-width:0}
+          .thai-converter input{width:3.1rem;min-width:0;font-size:16px!important;padding:.3rem .15rem}
+          #thb-input{width:3.8rem}
+          .thai-converter #thai-rate-label{font-size:.65rem;max-width:46%;min-width:0;padding:.35rem .45rem;min-height:36px}
+          #thai-tools-menu>summary+div{max-width:calc(100vw - 1.5rem)}
+          .planner-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:.35rem}
+          .planner-nav .tab-btn{min-width:0;min-height:44px;padding:.7rem .75rem;gap:.4rem}
+          .planner-nav .tab-btn span{overflow-wrap:anywhere}
+          #days-container .day-card{padding:.8rem}
+          #days-container .day-card .thai-section{padding:.7rem}
+          #days-container .day-card>div.flex.flex-wrap.gap-2{gap:.4rem}
+          #days-container .day-card>div.flex.flex-wrap.gap-2 .thai-action{font-size:.72rem;padding:.45rem .6rem}
+          .thai-forecast-row{align-items:flex-start}
+          .thai-modal-panel{max-height:90dvh}
+          #tab-budget>div{padding:1rem}
+        }
+        @media(max-width:360px){
+          .thai-header{padding:.55rem .55rem}
+          .thai-header-title{font-size:.82rem}
+          .thai-header-tools>button,.thai-header-tools>details>summary{min-width:36px;min-height:40px;padding:.45rem}
+          .thai-converter>div i{display:none}
+          .thai-converter #thai-rate-label{font-size:.59rem}
+        }
 
-/* Thai Planner - UX stabilizzata: leggibilità e budget previsionale */
-.thai-forecast-stat { background:rgba(255,255,255,.72);border:1px solid #b5d9dd;border-radius:.85rem;padding:.7rem;display:flex;flex-direction:column;gap:.35rem;min-width:0 }
-.thai-forecast-stat span { font-size:.7rem;color:#34566b;font-weight:600 }
-.thai-forecast-stat strong { font-size:clamp(.95rem,2vw,1.25rem);font-variant-numeric:tabular-nums;overflow-wrap:anywhere }
-.dark .thai-forecast-stat{background:#244650;border-color:#487982}
-.dark .thai-forecast-stat span{color:#c3e9ea}
-.thai-forecast-row { display:flex;align-items:center;flex-wrap:wrap;gap:.65rem;border:1px solid #c4dadb;border-radius:.85rem;padding:.7rem;background:rgba(255,255,255,.65) }
-.dark .thai-forecast-row{background:#203a49;border-color:#496e77}
-.thai-forecast-actions{display:flex;gap:.3rem;flex-wrap:wrap;width:100%;justify-content:flex-end}
-.thai-forecast-actions button {min-height:40px;padding:.4rem .65rem;border-radius:.65rem;border:1px solid #a9cfd0;font-size:.78rem;font-weight:600}
-.dark .thai-forecast-actions button {border-color:#67939c;color:#e4f8f7}
-#thai-forecast-modal .thai-field {width:100%;display:block;margin-top:.35rem;min-height:44px}
-@media(max-width:767px){
-  #tab-budget > div {padding:1rem!important}
-  #tab-budget .budget-stat {min-height:0;padding:.85rem}
-  #tab-budget .budget-stat-value {font-size:1.25rem}
-  #thai-forecast-panel {padding:.85rem}
-  .thai-forecast-row > strong {margin-left:auto}
-  .thai-forecast-actions {justify-content:flex-start}
-  .thai-forecast-actions button {flex:1 1 auto}
-  #tab-itinerary button, #tab-budget button, #tab-notes button, #tab-checklist button {touch-action:manipulation}
-}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+        #tab-budget > div{gap:1rem}
+        #tab-budget .thai-fold-header{margin-bottom:.45rem;gap:.55rem}
+        #tab-budget .thai-fold-header > :first-child{min-width:0;overflow-wrap:anywhere}
+        #tab-budget .thai-fold-body{min-width:0}
+        #tab-budget section[aria-label="Quanto costa il viaggio a persona"]{gap:.6rem}
+        #tab-budget section[aria-label="Quanto costa il viaggio a persona"] .thai-fold-body{gap:.7rem}
+        #tab-budget .thai-budget-intro{line-height:1.45;max-width:65ch;margin:0}
+        #tab-budget .budget-stat{gap:.32rem;padding:.8rem .9rem;min-height:0;box-shadow:none}
+        #tab-budget .budget-stat-head{gap:.45rem;font-size:.76rem;line-height:1.3}
+        #tab-budget .budget-stat-icon{width:1.8rem;height:1.8rem;font-size:.95rem;border-radius:.55rem}
+        #tab-budget .budget-stat-value{font-size:clamp(1.1rem,2vw,1.5rem);line-height:1.2;overflow-wrap:anywhere}
+        #tab-budget .budget-stat-note{font-size:.7rem;line-height:1.3}
+        #tab-budget .budget-stat-result{font-size:.83rem;line-height:1.4}
+        #tab-budget .budget-stat-result b{font-size:.92rem}
+        #tab-budget #personal-budget-summary{gap:.65rem}
+        #tab-budget #split-summary-box{gap:.65rem}
+        #tab-budget .thai-category-summary{padding:.8rem .9rem;font-size:.78rem;min-width:0}
+        #tab-budget .thai-category-summary p{margin-bottom:.4rem}
+        #tab-budget .thai-category-grid{gap:.4rem .8rem;align-items:baseline}
+        #tab-budget .thai-category-grid span,#tab-budget .thai-category-grid b{min-width:0;overflow-wrap:anywhere}
+        #tab-budget .thai-category-grid span:nth-child(3n+2),
+        #tab-budget .thai-category-grid span:nth-child(3n+3){white-space:nowrap;font-variant-numeric:tabular-nums}
+        #tab-budget #thai-forecast-panel{padding:.85rem;gap:.7rem}
+        #tab-budget #thai-forecast-panel .thai-fold-body{gap:.75rem}
+        #tab-budget #thai-forecast-panel .thai-forecast-stat{padding:.65rem .75rem;gap:.22rem;min-height:0}
+        #tab-budget #thai-forecast-panel .thai-forecast-stat span{font-size:.69rem;line-height:1.3}
+        #tab-budget #thai-forecast-panel .thai-forecast-stat strong{font-size:clamp(.95rem,1.65vw,1.25rem);line-height:1.25;white-space:normal}
+        #tab-budget #thai-forecast-panel .budget-stat strong{font-size:clamp(1.05rem,1.8vw,1.4rem);line-height:1.2}
+        #tab-budget #thai-forecast-panel button[onclick="thaiOpenForecast()"]{min-height:36px;padding:.4rem .65rem;font-size:.74rem;flex:0 0 auto}
+        #tab-budget #thai-forecast-list{gap:.55rem}
+        #tab-budget .thai-forecast-row{display:grid;grid-template-columns:1.8rem minmax(0,1fr) auto;align-items:center;gap:.5rem .7rem;padding:.65rem .75rem}
+        #tab-budget .thai-forecast-icon{grid-column:1;grid-row:1}
+        #tab-budget .thai-forecast-row>div.flex-1{grid-column:2;grid-row:1}
+        #tab-budget .thai-forecast-row>strong{grid-column:3;grid-row:1;white-space:nowrap;font-variant-numeric:tabular-nums;font-size:.95rem;margin:0}
+        #tab-budget .thai-forecast-actions{grid-column:2 / -1;grid-row:2;justify-content:flex-end;gap:.35rem}
+        #tab-budget .thai-forecast-actions button{flex:0 0 auto;min-height:34px;padding:.3rem .55rem;font-size:.73rem}
+        #tab-budget .thai-expense-heading{margin:.25rem 0 0;font-size:.9rem}
+        #tab-budget #expenses-list{gap:.6rem}
+        #tab-budget .thai-expense-card{padding:.7rem .8rem}
+        #tab-budget .thai-expense-head{gap:.6rem}
+        #tab-budget .thai-expense-name{font-size:.85rem}
+        #tab-budget .thai-expense-meta{font-size:.72rem}
+        #tab-budget .thai-expense-icon{width:1.85rem;height:1.85rem;font-size:1rem}
+        #tab-budget .thai-expense-amount{font-size:.95rem}
+        #tab-budget .thai-expense-details{margin-top:.6rem;padding-top:.55rem}
+        #tab-budget .thai-expense-actions{margin-top:.6rem;gap:.4rem}
+        #tab-budget .thai-expense-actions button{min-height:36px;padding:.35rem .7rem;font-size:.75rem}
+        #tab-budget #expense-filter-sum{font-variant-numeric:tabular-nums}
+        @media(max-width:767px){
+          #tab-budget>div{padding:.8rem!important;gap:.8rem}
+          #tab-budget .thai-category-grid{gap:.4rem .45rem;font-size:.7rem}
+          #tab-budget .thai-category-summary{padding:.7rem}
+          #tab-budget .thai-category-grid span:nth-child(3n+2),
+          #tab-budget .thai-category-grid span:nth-child(3n+3){white-space:normal;text-align:right}
+          #tab-budget #personal-budget-summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem}
+          #tab-budget #personal-budget-summary .budget-stat{padding:.6rem;gap:.25rem}
+          #tab-budget #personal-budget-summary .budget-stat-head{font-size:.7rem;flex-wrap:wrap}
+          #tab-budget #personal-budget-summary .budget-stat-value{font-size:clamp(.95rem,3.5vw,1.25rem)}
+          #tab-budget #personal-budget-summary .budget-stat-note{font-size:.66rem}
+          #tab-budget .thai-forecast-row{grid-template-columns:1.5rem minmax(0,1fr) auto;gap:.45rem;padding:.6rem}
+          #tab-budget .thai-forecast-row>strong{font-size:.82rem}
+          #tab-budget .thai-forecast-actions{grid-column:1 / -1;justify-content:flex-start;flex-wrap:wrap}
+          #tab-budget .thai-forecast-actions button{flex:0 1 auto;font-size:.7rem;min-height:36px}
+          #tab-budget #thai-forecast-panel .grid.grid-cols-2.gap-2.sm\\:grid-cols-4{gap:.45rem}
+          #tab-budget #thai-forecast-panel .thai-forecast-stat{padding:.55rem}
+          #tab-budget #thai-forecast-panel .thai-forecast-stat strong{font-size:clamp(.85rem,3.5vw,1.05rem)}
+          #tab-budget .thai-expense-head{gap:.4rem}
+          #tab-budget .thai-expense-amount{font-size:.84rem}
+          #tab-budget .thai-expense-chevron{width:35px;min-width:35px;height:38px}
+        }
+        @media(max-width:360px){
+          #tab-budget #personal-budget-summary{grid-template-columns:1fr}
+          #tab-budget .thai-category-grid{font-size:.67rem;gap:.35rem}
+          #tab-budget .thai-forecast-actions button{padding:.3rem .4rem}
+        }
 
-/* Thai Planner UX/UI refresh: layout coerente senza cambiare le funzioni. */
-.thai-header{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(0,auto) auto;
-  grid-template-areas:"brand converter tools";
-  gap:.75rem 1rem;
-  align-items:center;
-}
-.thai-header-brand{grid-area:brand}
-.thai-header-actions{display:contents}
-.thai-converter{grid-area:converter;justify-content:flex-end}
-.thai-header-tools{grid-area:tools;justify-content:flex-end}
-.thai-title-mobile{display:none}
-.thai-header-title{min-width:0;font-size:1rem;line-height:1.25;flex-wrap:wrap;column-gap:.5rem;row-gap:.2rem}
-#sync-status{display:inline-flex;align-items:center;max-width:100%;white-space:normal;line-height:1.2}
-.thai-header-tools>button,.thai-header-tools>details>summary{border:1px solid transparent}
-.thai-header-tools>button:hover,.thai-header-tools>details>summary:hover{border-color:#b7d8d6}
-.thai-header-tools>button:focus-visible,.thai-header-tools>details>summary:focus-visible{outline:2px solid #60bfb5;outline-offset:2px}
-.thai-converter #thai-rate-label{white-space:normal;line-height:1.25;font-variant-numeric:tabular-nums}
-.thai-converter input{font-variant-numeric:tabular-nums}
-#thai-tools-menu[open]>summary{background:#e1f2ef;color:#205c62}
-.dark #thai-tools-menu[open]>summary{background:#315b62;color:#dffbf4}
+        :root { --thai-card-gap: .85rem; }
+        [data-thai-fold-key]:not([data-thai-fold-key^="expense:"]) > .thai-fold-body {
+          display:flex;
+          flex-direction:column;
+          gap:var(--thai-card-gap);
+          min-width:0;
+        }
+        [data-thai-fold-key]:not([data-thai-fold-key^="expense:"]) > .thai-fold-body > * {
+          margin-top:0!important;
+          margin-bottom:0!important;
+          min-width:0;
+        }
+        [data-thai-fold-key^="day:"] > .thai-fold-body {
+          gap:var(--thai-card-gap);
+        }
+        [data-thai-fold-key$=":activities"] > .thai-fold-body {
+          gap:var(--thai-card-gap);
+        }
+        [data-thai-fold-key$=":activities"] > .thai-fold-body > .activity-detail {
+          margin:0!important;
+        }
+        #thai-forecast-list,
+        #expenses-list {
+          display:flex;
+          flex-direction:column;
+          gap:var(--thai-card-gap)!important;
+        }
+        #thai-forecast-list > *,
+        #expenses-list > * {
+          margin:0!important;
+        }
+        #tab-budget #thai-forecast-panel > .thai-fold-body {
+          gap:var(--thai-card-gap)!important;
+        }
+        #tab-budget #thai-forecast-panel > .thai-fold-body > .grid {
+          gap:var(--thai-card-gap)!important;
+        }
+        #tab-budget #thai-forecast-panel .thai-forecast-row {
+          margin:0!important;
+        }
+        #tab-budget section[aria-label="Quanto costa il viaggio a persona"] > .thai-fold-body {
+          gap:var(--thai-card-gap)!important;
+        }
+        #tab-budget #personal-budget-summary,
+        #tab-budget #split-summary-box {
+          gap:var(--thai-card-gap)!important;
+        }
+        #tab-budget .thai-forecast-row {
+          padding:.8rem .9rem;
+        }
+        #tab-budget .thai-forecast-row > .thai-forecast-actions {
+          margin-top:.1rem;
+        }
+        #tab-budget .thai-forecast-row + .thai-forecast-row {
+          margin-top:0!important;
+        }
+        #tab-budget .thai-expense-card {
+          margin:0!important;
+        }
+        #tab-budget .thai-forecast-stat,
+        #tab-budget #thai-forecast-panel .budget-stat {
+          margin:0;
+        }
+        @media(max-width:767px){
+          :root { --thai-card-gap:.7rem; }
+          #tab-budget #thai-forecast-panel > .thai-fold-body > .grid {
+            gap:.7rem!important;
+          }
+          #tab-budget #thai-forecast-panel .thai-forecast-row { padding:.7rem .75rem; }
+        }
+        .thai-activity-cost{margin:.35rem 0 0;font-size:.75rem;font-weight:650;color:#287665;line-height:1.35}.dark .thai-activity-cost{color:#99e2d0}
 
-/* Schede: gerarchia, ritmo verticale e superfici omogenee. */
-#planner-sidebar .planner-nav,#planner-sidebar .flight-card,#planner-sidebar .travellers-card,
-#days-container .day-card,.day-summary-card,#tab-budget>div,#tab-notes>div,#tab-checklist>div{
-  border-radius:1rem;
-}
-#days-container .day-card{padding:1rem;min-width:0}
-#days-container .day-card>div{min-width:0}
-#days-container .day-card h3{font-size:1rem;line-height:1.4;overflow-wrap:anywhere}
-#days-container .day-card .thai-section{border-radius:.85rem;padding:.8rem;line-height:1.55}
-#days-container .activity-detail{line-height:1.5}
-#days-container .thai-legacy{line-height:1.5}
-#days-container .day-card a{overflow-wrap:anywhere}
-.planner-nav .tab-btn{border-radius:.8rem;font-size:.875rem;line-height:1.35}
-.thai-action{line-height:1.3;white-space:normal;text-align:center;justify-content:center;max-width:100%;transition:background-color .15s ease,filter .15s ease}
-.thai-budget-link,.dark .thai-budget-link{
-  display:inline-flex!important;
-  width:auto!important;
-  min-height:30px!important;
-  max-width:max-content;
-  padding:.25rem .5rem!important;
-  font-size:.7rem!important;
-  font-weight:650!important;
-  line-height:1.15!important;
-  border-radius:.5rem!important;
-  vertical-align:middle;
-  white-space:nowrap;
-}
-.thai-budget-link{background:#e0f1ea!important;color:#27664f!important;border:1px solid #bedeca}
-.dark .thai-budget-link{background:#285548!important;color:#dbf8eb!important;border:1px solid #4e8572}
-.thai-budget-link{margin-left:.65rem!important;margin-top:.35rem!important;margin-bottom:.15rem!important;gap:.2rem!important}
-.thai-budget-link:hover{filter:brightness(.95)}
-#tab-budget .budget-stat{min-width:0}
-#tab-budget .budget-stat-value{overflow-wrap:anywhere}
-#tab-budget .thai-forecast-row{gap:.6rem}
-#tab-budget .thai-forecast-actions button{min-height:36px}
-.thai-modal-panel,.thai-flight-modal-panel{border-radius:1rem}
-.thai-field{max-width:100%}
-@media(min-width:768px) and (max-width:1100px){
-  .thai-header{
-    grid-template-columns:minmax(0,1fr) auto;
-    grid-template-areas:"brand tools" "converter converter";
-  }
-  .thai-converter{justify-content:flex-start;flex-wrap:wrap}
-  .thai-header-tools{justify-content:flex-end}
-}
-@media(min-width:1101px){
-  .thai-header{grid-template-columns:minmax(190px,1fr) auto auto}
-  .thai-converter{flex-wrap:nowrap}
-  #days-container .day-card{padding:1.1rem 1.25rem}
-  .planner-nav .tab-btn:hover{background:rgba(79,157,150,.12)}
-}
-@media(max-width:767px){
-  .thai-header{
-    grid-template-columns:minmax(0,1fr) auto;
-    grid-template-areas:"brand tools" "converter converter";
-    padding:.65rem .8rem;
-    column-gap:.35rem;row-gap:.55rem;
-  }
-  .thai-title-desktop,.thai-header-subtitle{display:none}
-  .thai-title-mobile{display:inline}
-  .thai-header-title{font-size:.9rem;gap:.25rem;align-items:center}
-  .thai-header-flag{padding:.4rem}
-  .thai-header-flag svg{width:25px;height:17px}
-  #sync-status{font-size:.6rem;padding:.1rem .4rem}
-  .thai-header-brand{gap:.5rem}
-  .thai-header-tools{gap:0}
-  .thai-header-tools>button,.thai-header-tools>details>summary{min-width:40px;min-height:40px;padding:.55rem}
-  .thai-converter{justify-content:space-between;gap:.4rem;flex-wrap:nowrap;width:100%}
-  .thai-converter>div{padding:.25rem .4rem;gap:.3rem;min-width:0}
-  .thai-converter input{width:3.1rem;min-width:0;font-size:16px!important;padding:.3rem .15rem}
-  #thb-input{width:3.8rem}
-  .thai-converter #thai-rate-label{font-size:.65rem;max-width:46%;min-width:0;padding:.35rem .45rem;min-height:36px}
-  #thai-tools-menu>summary+div{max-width:calc(100vw - 1.5rem)}
-  .planner-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:.35rem}
-  .planner-nav .tab-btn{min-width:0;min-height:44px;padding:.7rem .75rem;gap:.4rem}
-  .planner-nav .tab-btn span{overflow-wrap:anywhere}
-  #days-container .day-card{padding:.8rem}
-  #days-container .day-card .thai-section{padding:.7rem}
-  #days-container .day-card>div.flex.flex-wrap.gap-2{gap:.4rem}
-  #days-container .day-card>div.flex.flex-wrap.gap-2 .thai-action{font-size:.72rem;padding:.45rem .6rem}
-  .thai-forecast-row{align-items:flex-start}
-  .thai-modal-panel{max-height:90dvh}
-  #tab-budget>div{padding:1rem}
-}
-@media(max-width:360px){
-  .thai-header{padding:.55rem .55rem}
-  .thai-header-title{font-size:.82rem}
-  .thai-header-tools>button,.thai-header-tools>details>summary{min-width:36px;min-height:40px;padding:.45rem}
-  .thai-converter>div i{display:none}
-  .thai-converter #thai-rate-label{font-size:.59rem}
-}
-
-
-/* Budget UI refinement: dimensioni coerenti, spazi ridotti, nessun contenuto modificato. */
-#tab-budget > div{gap:1rem}
-#tab-budget .thai-fold-header{margin-bottom:.45rem;gap:.55rem}
-#tab-budget .thai-fold-header > :first-child{min-width:0;overflow-wrap:anywhere}
-#tab-budget .thai-fold-body{min-width:0}
-#tab-budget section[aria-label="Quanto costa il viaggio a persona"]{gap:.6rem}
-#tab-budget section[aria-label="Quanto costa il viaggio a persona"] .thai-fold-body{gap:.7rem}
-#tab-budget .thai-budget-intro{line-height:1.45;max-width:65ch;margin:0}
-#tab-budget .budget-stat{gap:.32rem;padding:.8rem .9rem;min-height:0;box-shadow:none}
-#tab-budget .budget-stat-head{gap:.45rem;font-size:.76rem;line-height:1.3}
-#tab-budget .budget-stat-icon{width:1.8rem;height:1.8rem;font-size:.95rem;border-radius:.55rem}
-#tab-budget .budget-stat-value{font-size:clamp(1.1rem,2vw,1.5rem);line-height:1.2;overflow-wrap:anywhere}
-#tab-budget .budget-stat-note{font-size:.7rem;line-height:1.3}
-#tab-budget .budget-stat-result{font-size:.83rem;line-height:1.4}
-#tab-budget .budget-stat-result b{font-size:.92rem}
-#tab-budget #personal-budget-summary{gap:.65rem}
-#tab-budget #split-summary-box{gap:.65rem}
-#tab-budget .thai-category-summary{padding:.8rem .9rem;font-size:.78rem;min-width:0}
-#tab-budget .thai-category-summary p{margin-bottom:.4rem}
-#tab-budget .thai-category-grid{gap:.4rem .8rem;align-items:baseline}
-#tab-budget .thai-category-grid span,#tab-budget .thai-category-grid b{min-width:0;overflow-wrap:anywhere}
-#tab-budget .thai-category-grid span:nth-child(3n+2),
-#tab-budget .thai-category-grid span:nth-child(3n+3){white-space:nowrap;font-variant-numeric:tabular-nums}
-#tab-budget #thai-forecast-panel{padding:.85rem;gap:.7rem}
-#tab-budget #thai-forecast-panel .thai-fold-body{gap:.75rem}
-#tab-budget #thai-forecast-panel .thai-forecast-stat{padding:.65rem .75rem;gap:.22rem;min-height:0}
-#tab-budget #thai-forecast-panel .thai-forecast-stat span{font-size:.69rem;line-height:1.3}
-#tab-budget #thai-forecast-panel .thai-forecast-stat strong{font-size:clamp(.95rem,1.65vw,1.25rem);line-height:1.25;white-space:normal}
-#tab-budget #thai-forecast-panel .budget-stat strong{font-size:clamp(1.05rem,1.8vw,1.4rem);line-height:1.2}
-#tab-budget #thai-forecast-panel button[onclick="thaiOpenForecast()"]{min-height:36px;padding:.4rem .65rem;font-size:.74rem;flex:0 0 auto}
-#tab-budget #thai-forecast-list{gap:.55rem}
-#tab-budget .thai-forecast-row{display:grid;grid-template-columns:1.8rem minmax(0,1fr) auto;align-items:center;gap:.5rem .7rem;padding:.65rem .75rem}
-#tab-budget .thai-forecast-icon{grid-column:1;grid-row:1}
-#tab-budget .thai-forecast-row>div.flex-1{grid-column:2;grid-row:1}
-#tab-budget .thai-forecast-row>strong{grid-column:3;grid-row:1;white-space:nowrap;font-variant-numeric:tabular-nums;font-size:.95rem;margin:0}
-#tab-budget .thai-forecast-actions{grid-column:2 / -1;grid-row:2;justify-content:flex-end;gap:.35rem}
-#tab-budget .thai-forecast-actions button{flex:0 0 auto;min-height:34px;padding:.3rem .55rem;font-size:.73rem}
-#tab-budget .thai-expense-heading{margin:.25rem 0 0;font-size:.9rem}
-#tab-budget #expenses-list{gap:.6rem}
-#tab-budget .thai-expense-card{padding:.7rem .8rem}
-#tab-budget .thai-expense-head{gap:.6rem}
-#tab-budget .thai-expense-name{font-size:.85rem}
-#tab-budget .thai-expense-meta{font-size:.72rem}
-#tab-budget .thai-expense-icon{width:1.85rem;height:1.85rem;font-size:1rem}
-#tab-budget .thai-expense-amount{font-size:.95rem}
-#tab-budget .thai-expense-details{margin-top:.6rem;padding-top:.55rem}
-#tab-budget .thai-expense-actions{margin-top:.6rem;gap:.4rem}
-#tab-budget .thai-expense-actions button{min-height:36px;padding:.35rem .7rem;font-size:.75rem}
-#tab-budget #expense-filter-sum{font-variant-numeric:tabular-nums}
-@media(max-width:767px){
-  #tab-budget>div{padding:.8rem!important;gap:.8rem}
-  #tab-budget .thai-category-grid{gap:.4rem .45rem;font-size:.7rem}
-  #tab-budget .thai-category-summary{padding:.7rem}
-  #tab-budget .thai-category-grid span:nth-child(3n+2),
-  #tab-budget .thai-category-grid span:nth-child(3n+3){white-space:normal;text-align:right}
-  #tab-budget #personal-budget-summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem}
-  #tab-budget #personal-budget-summary .budget-stat{padding:.6rem;gap:.25rem}
-  #tab-budget #personal-budget-summary .budget-stat-head{font-size:.7rem;flex-wrap:wrap}
-  #tab-budget #personal-budget-summary .budget-stat-value{font-size:clamp(.95rem,3.5vw,1.25rem)}
-  #tab-budget #personal-budget-summary .budget-stat-note{font-size:.66rem}
-  #tab-budget .thai-forecast-row{grid-template-columns:1.5rem minmax(0,1fr) auto;gap:.45rem;padding:.6rem}
-  #tab-budget .thai-forecast-row>strong{font-size:.82rem}
-  #tab-budget .thai-forecast-actions{grid-column:1 / -1;justify-content:flex-start;flex-wrap:wrap}
-  #tab-budget .thai-forecast-actions button{flex:0 1 auto;font-size:.7rem;min-height:36px}
-  #tab-budget #thai-forecast-panel .grid.grid-cols-2.gap-2.sm\\:grid-cols-4{gap:.45rem}
-  #tab-budget #thai-forecast-panel .thai-forecast-stat{padding:.55rem}
-  #tab-budget #thai-forecast-panel .thai-forecast-stat strong{font-size:clamp(.85rem,3.5vw,1.05rem)}
-  #tab-budget .thai-expense-head{gap:.4rem}
-  #tab-budget .thai-expense-amount{font-size:.84rem}
-  #tab-budget .thai-expense-chevron{width:35px;min-width:35px;height:38px}
-}
-@media(max-width:360px){
-  #tab-budget #personal-budget-summary{grid-template-columns:1fr}
-  #tab-budget .thai-category-grid{font-size:.67rem;gap:.35rem}
-  #tab-budget .thai-forecast-actions button{padding:.3rem .4rem}
-}
-
-/* Spaziature uniformi dei pannelli dopo il wrapping Comprimi/Espandi.
-   I contenuti vengono spostati in .thai-fold-body: le classi space-y
-   sul contenitore originale non sono piu' applicate ai singoli riquadri. */
-:root { --thai-card-gap: .85rem; }
-[data-thai-fold-key]:not([data-thai-fold-key^="expense:"]) > .thai-fold-body {
-  display:flex;
-  flex-direction:column;
-  gap:var(--thai-card-gap);
-  min-width:0;
-}
-[data-thai-fold-key]:not([data-thai-fold-key^="expense:"]) > .thai-fold-body > * {
-  margin-top:0!important;
-  margin-bottom:0!important;
-  min-width:0;
-}
-[data-thai-fold-key^="day:"] > .thai-fold-body {
-  gap:var(--thai-card-gap);
-}
-[data-thai-fold-key$=":activities"] > .thai-fold-body {
-  gap:var(--thai-card-gap);
-}
-[data-thai-fold-key$=":activities"] > .thai-fold-body > .activity-detail {
-  margin:0!important;
-}
-#thai-forecast-list,
-#expenses-list {
-  display:flex;
-  flex-direction:column;
-  gap:var(--thai-card-gap)!important;
-}
-#thai-forecast-list > *,
-#expenses-list > * {
-  margin:0!important;
-}
-#tab-budget #thai-forecast-panel > .thai-fold-body {
-  gap:var(--thai-card-gap)!important;
-}
-#tab-budget #thai-forecast-panel > .thai-fold-body > .grid {
-  gap:var(--thai-card-gap)!important;
-}
-#tab-budget #thai-forecast-panel .thai-forecast-row {
-  margin:0!important;
-}
-#tab-budget section[aria-label="Quanto costa il viaggio a persona"] > .thai-fold-body {
-  gap:var(--thai-card-gap)!important;
-}
-#tab-budget #personal-budget-summary,
-#tab-budget #split-summary-box {
-  gap:var(--thai-card-gap)!important;
-}
-#tab-budget .thai-forecast-row {
-  padding:.8rem .9rem;
-}
-#tab-budget .thai-forecast-row > .thai-forecast-actions {
-  margin-top:.1rem;
-}
-#tab-budget .thai-forecast-row + .thai-forecast-row {
-  margin-top:0!important;
-}
-#tab-budget .thai-expense-card {
-  margin:0!important;
-}
-#tab-budget .thai-forecast-stat,
-#tab-budget #thai-forecast-panel .budget-stat {
-  margin:0;
-}
-@media(max-width:767px){
-  :root { --thai-card-gap:.7rem; }
-  #tab-budget #thai-forecast-panel > .thai-fold-body > .grid {
-    gap:.7rem!important;
-  }
-  #tab-budget #thai-forecast-panel .thai-forecast-row { padding:.7rem .75rem; }
-}
-.thai-activity-cost{margin:.35rem 0 0;font-size:.75rem;font-weight:650;color:#287665;line-height:1.35}.dark .thai-activity-cost{color:#99e2d0}
-        
-/* NOTE - Riordino e spaziature */
-
-#notes-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.thai-note-card {
-    margin: 0 !important;
-    min-width: 0;
-}
-
-.note-drag-handle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: 30px;
-    height: 38px;
-    border-radius: 8px;
-    color: #477f8a;
-    font-size: 20px;
-    cursor: grab;
-    touch-action: none;
-    user-select: none;
-}
-
-.note-drag-handle:active {
-    cursor: grabbing;
-}
-
-.dark .note-drag-handle {
-    color: #9bd5d9;
-}
-
-.thai-note-actions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 4px;
-}
-
-.thai-note-order-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: 34px;
-    min-height: 38px;
-    border-radius: 9px;
-    background: #d9eeef;
-    border: 1px solid #a9d3d7;
-    color: #245c66;
-    font-size: 16px;
-    font-weight: 800;
-}
-
-.dark .thai-note-order-btn {
-    background: #2c5360;
-    border-color: #608995;
-    color: #e6f8fa;
-}
-
-.thai-note-order-btn:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-}
-
-/* Mobile */
-
-@media (max-width: 480px) {
-    .thai-note-card {
-        padding: 10px !important;
-    }
-
-    .thai-note-card > div:first-child {
-        flex-wrap: wrap;
-    }
-
-    .note-drag-handle {
-        width: 24px;
-    }
-
-    .thai-note-order-btn {
-        width: 31px;
-        min-height: 36px;
-    }
-}
+        #notes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .thai-note-card {
+            margin: 0 !important;
+            min-width: 0;
+        }
+        .note-drag-handle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 30px;
+            height: 38px;
+            border-radius: 8px;
+            color: #477f8a;
+            font-size: 20px;
+            cursor: grab;
+            touch-action: none;
+            user-select: none;
+        }
+        .note-drag-handle:active {
+            cursor: grabbing;
+        }
+        .dark .note-drag-handle {
+            color: #9bd5d9;
+        }
+        .thai-note-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 4px;
+        }
+        .thai-note-order-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 34px;
+            min-height: 38px;
+            border-radius: 99px;
+            background: #d9eeef;
+            border: 1px solid #a9d3d7;
+            color: #245c66;
+            font-size: 16px;
+            font-weight: 800;
+        }
+        .dark .thai-note-order-btn {
+            background: #2c5360;
+            border-color: #608995;
+            color: #e6f8fa;
+        }
+        .thai-note-order-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+        @media (max-width: 480px) {
+            .thai-note-card { padding: 10px !important; }
+            .thai-note-card > div:first-child { flex-wrap: wrap; }
+            .note-drag-handle { width: 24px; }
+            .thai-note-order-btn { width: 31px; min-height: 36px; }
+        }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200" onload="initApp()">
@@ -751,7 +678,7 @@
                 </div>
             </div>
 
-            <!-- Convertitore sempre visibile, anche su iPhone -->
+            <!-- Convertitore -->
             <div class="thai-header-actions">
                 <div class="thai-converter flex flex-wrap items-center gap-2 min-w-0">
                     <div class="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-2 py-1.5 text-xs">
@@ -762,7 +689,7 @@
                     </div>
                     <button type="button" onclick="thaiUpdateExchangeRate(true)" id="thai-rate-label" class="text-[11px] text-sky-700 dark:text-sky-200 rounded-lg border border-sky-200 dark:border-sky-700 px-2 py-2 min-h-[40px]" title="Aggiorna il cambio EUR/THB online" aria-label="Aggiorna il cambio EUR/THB online">Cambio EUR/THB: caricamento…</button>
                 </div>
-                <!-- Barra compatta: aggiorna, tema, strumenti -->
+                <!-- Barra strumenti -->
                 <div class="thai-header-tools flex items-center gap-1">
                     <button type="button" onclick="thaiRefresh()" class="p-2.5 min-w-[44px] min-h-[44px] text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition" title="Aggiorna i dati dal database" aria-label="Aggiorna i dati dal database"><i class="fa-solid fa-rotate" aria-hidden="true"></i></button>
                     <button type="button" onclick="thaiToggleTheme()" class="p-2.5 min-w-[44px] min-h-[44px] text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition" title="Cambia modalità giorno o notte" aria-label="Cambia modalità giorno o notte"><i class="fa-solid fa-moon dark:hidden" aria-hidden="true"></i><i class="fa-solid fa-sun hidden dark:inline" aria-hidden="true"></i></button>
@@ -805,13 +732,13 @@
                     </button>
                 </nav>
 
-                <!-- Voli caricati soltanto dal database autenticato -->
+                <!-- Voli -->
                 <section class="flight-card order-3 md:order-2 bg-amber-50 dark:bg-amber-950/20 text-slate-800 dark:text-slate-100 p-4 rounded-2xl border border-amber-200 dark:border-amber-800 shadow-sm space-y-3 text-xs">
                   <div class="flex items-center justify-between gap-2 flex-wrap"><h2 class="font-bold text-base">✈️ Voli Saudia</h2></div>
                   <div id="thai-flights-list" class="space-y-2"><p>Accedi per visualizzare i voli.</p></div><div class="border-t border-amber-300 dark:border-amber-700 pt-3"><div class="flex items-center justify-between gap-2 mb-2"><h3 class="font-bold text-sm">🛫 Voli interni</h3><button type="button" onclick="thaiEditFlight(-1)" class="thai-action">+ Aggiungi</button></div><div id="thai-domestic-list" class="space-y-2"></div></div>
                 </section>
 
-                <!-- Box Viaggiatrici & Countdown -->
+                <!-- Viaggiatrici -->
                 <section class="travellers-card order-4 md:order-3 bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-2 text-xs">
                     <h2 class="font-bold text-sm flex items-center gap-2 text-brand-600 dark:text-brand-400">
                         <i class="fa-solid fa-user-group"></i> Le Viaggiatrici
@@ -840,6 +767,7 @@
                 </section>
 
                 <section id="tab-today" class="tab-content hidden space-y-3"><div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-teal-200 dark:border-teal-800"><div class="flex flex-wrap justify-between gap-2 items-center"><h2 class="font-bold text-lg">☀️ La tua giornata</h2><select id="thai-today-day" class="thai-field max-w-[220px]" onchange="thaiRenderToday()" aria-label="Seleziona giornata"></select></div><p class="text-xs opacity-75">Durante il viaggio viene selezionato automaticamente il giorno corrente. Puoi cambiare giornata dal menu.</p></div><div id="thai-today-content" class="space-y-3"></div></section>
+                
                 <!-- Tab Budget -->
                 <section id="tab-budget" class="tab-content budget-page hidden space-y-4">
                     <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
@@ -855,7 +783,7 @@
                             </div>
                         </div>
 
-                        <!-- Stima 50/50 sul totale registrato -->
+                        <!-- Stima 50/50 -->
                         <section class="rounded-2xl border border-teal-200 dark:border-teal-700/60 bg-teal-50 dark:bg-teal-950/30 p-4 space-y-2" aria-label="Stima budget a testa">
                             <div>
                                 <h3 class="font-bold text-sm text-teal-900 dark:text-teal-100">🌊 Stima totale a testa · 50/50</h3>
@@ -874,7 +802,7 @@
                             <p class="text-xs text-slate-600 dark:text-slate-300">È una stima 50/50 sulle spese già inserite, non include costi futuri non ancora registrati. La ripartizione effettiva è indicata sotto.</p>
                         </section>
 
-                        <!-- Budget previsionale separato dalle spese effettive -->
+                        <!-- Budget previsionale -->
                         <section id="thai-forecast-panel" class="rounded-2xl border border-cyan-200 dark:border-cyan-700/60 bg-cyan-50 dark:bg-cyan-950/25 p-4 space-y-3" aria-label="Previsione di spesa">
                           <div class="flex flex-wrap gap-2 justify-between items-start">
                             <p class="thai-budget-intro text-xs text-slate-600 dark:text-slate-300">Spese pagate + costi ancora da pagare. Le spese già registrate non vanno inserite nuovamente.</p>
@@ -893,19 +821,16 @@
                           <div id="thai-forecast-list" class="space-y-2"></div>
                         </section>
 
-                        <!-- Box Debiti / Crediti tra Barbara e Laura -->
-                        <section id="thai-budget-balance-panel" class="rounded-xl border border-slate-200 dark:border-slate-700 p-3"><div id="split-summary-box" class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm" aria-live="polite">
-                            <!-- Popolato via JS -->
-                        </div></section>
+                        <!-- Box Debiti / Crediti -->
+                        <section id="thai-budget-balance-panel" class="rounded-xl border border-slate-200 dark:border-slate-700 p-3"><div id="split-summary-box" class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm" aria-live="polite"></div></section>
 
-                        <!-- Quota effettiva di spesa per ciascuna persona -->
+                        <!-- Quota effettiva -->
                         <section aria-label="Quanto costa il viaggio a persona" class="space-y-3">
                             <p class="thai-budget-intro text-xs text-slate-500 dark:text-slate-300">Quota di spesa di ciascuna, indipendentemente da chi ha anticipato il denaro.</p>
                             <div id="personal-budget-summary" class="grid grid-cols-1 sm:grid-cols-2 gap-3" aria-live="polite"></div>
                             <div id="personal-category-summary" class="thai-category-summary rounded-xl border border-slate-200 dark:border-slate-600 p-3 text-xs space-y-2"></div>
                         </section>
 
-                        <!-- Pulsante aggiungi spesa -->
                         <h3 class="thai-expense-heading font-bold text-sm">Elenco spese</h3>
 
                         <div class="flex flex-wrap items-center gap-2 text-xs">
@@ -945,22 +870,19 @@
         </div>
     </div>
 
-    <!-- MODALE AGGIUNTA / MODIFICA SPESA -->
+    <!-- MODALE SPESA -->
     <div id="expense-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-700 shadow-xl space-y-4">
             <h3 id="modal-title" class="font-bold text-base text-slate-800 dark:text-slate-100">Nuova Spesa</h3>
             <input type="hidden" id="expense-edit-index" value="-1">
-            
             <div class="space-y-1 text-xs">
                 <label class="font-semibold text-slate-600 dark:text-slate-300">Descrizione Spesa</label>
                 <input type="text" id="exp-title-input" placeholder="Es. Cena sul mare, Taxi, Hotel..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2">
             </div>
-
             <div class="space-y-1 text-xs">
                 <label class="font-semibold text-slate-600 dark:text-slate-300">Importo (€)</label>
                 <input type="number" step="0.01" id="exp-amount-input" placeholder="0.00" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2">
             </div>
-
             <div class="space-y-1 text-xs">
                 <label class="font-semibold text-slate-600 dark:text-slate-300">Chi ha anticipato i soldi?</label>
                 <select id="exp-payer-input" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2">
@@ -968,7 +890,6 @@
                     <option value="Laura">Laura</option>
                 </select>
             </div>
-
             <div class="space-y-1 text-xs">
                 <label class="font-semibold text-slate-600 dark:text-slate-300">Come va divisa la spesa?</label>
                 <select id="exp-split-input" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2">
@@ -977,7 +898,6 @@
                     <option value="Laura">Interamente a carico di Laura</option>
                 </select>
             </div>
-
             <div class="space-y-1 text-xs">
                 <label class="font-semibold text-slate-600 dark:text-slate-300">Categoria</label>
                 <select id="exp-category-input" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2">
@@ -991,7 +911,7 @@
         </div>
     </div>
 
-    <!-- Indicatore trascina verso il basso per aggiornare su mobile -->
+    <!-- Indicatore Conflitto e Previsione -->
     <div id="thai-conflict-modal" class="fixed inset-0 z-[90] hidden items-center justify-center bg-black/70 p-3" role="dialog" aria-modal="true" aria-labelledby="thai-conflict-title">
       <div class="max-w-xl w-full max-h-[90vh] overflow-y-auto rounded-2xl bg-white dark:bg-slate-800 p-5 space-y-3 shadow-xl">
         <h2 id="thai-conflict-title" class="text-lg font-bold">⚠️ Modifiche su due dispositivi</h2>
@@ -1019,8 +939,8 @@
     <div id="thai-pull-indicator" role="status" aria-live="polite" class="fixed z-50 left-1/2 top-3 -translate-x-1/2 rounded-full bg-slate-800 text-white shadow-xl border border-slate-600 px-4 py-2 text-xs font-semibold pointer-events-none" style="opacity:0;transform:translate(-50%,-110%);transition:opacity 150ms ease,transform 150ms ease;white-space:nowrap">
         ↓ Trascina per aggiornare
     </div>
-    <!-- Un'unica finestra per giornate, attività, trasporti, hotel, note e To Do -->
-    <!-- SPOSTA PRENOTAZIONE TRA GIORNI -->
+
+    <!-- SPOSTA PRENOTAZIONE / ATTIVITÀ TRA GIORNI -->
     <div id="thai-move-modal" role="dialog" aria-modal="true" aria-labelledby="thai-move-title" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-3 sm:p-5">
       <form onsubmit="thaiConfirmMove(event)" class="bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 max-w-md w-full p-5 space-y-4">
         <h2 id="thai-move-title" class="font-bold text-lg">Sposta a un altro giorno</h2>
@@ -1028,13 +948,14 @@
         <div><label for="thai-move-destination" class="thai-label">Giorno di destinazione</label>
           <select id="thai-move-destination" class="thai-field" required></select>
         </div>
-        <p class="text-xs text-slate-500 dark:text-slate-300">Vengono mantenuti prezzi, orari, link e informazioni della prenotazione. Le spese del budget non cambiano.</p>
+        <p class="text-xs text-slate-500 dark:text-slate-300">Vengono mantenuti prezzi, orari, link, mappe e informazioni delle attività/prenotazioni. Le spese del budget rimarranno collegate.</p>
         <div class="flex justify-end flex-wrap gap-2">
           <button type="button" onclick="thaiCloseMove()" class="thai-action">Annulla</button>
           <button type="submit" class="thai-action bg-brand-600 text-white">Conferma spostamento</button>
         </div>
       </form>
     </div>
+    
     <div id="thai-modal" role="dialog" aria-modal="true" aria-labelledby="thai-modal-title" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-3 sm:p-5">
         <form id="thai-modal-form" onsubmit="saveThaiModal(event)" class="thai-modal-panel bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 max-w-lg w-full p-5 space-y-4">
             <h2 id="thai-modal-title" class="font-bold text-lg"></h2>
@@ -1047,6 +968,7 @@
     </div>
     <div id="thai-flight-modal" class="hidden fixed inset-0 z-[90] bg-black/65 items-center justify-center p-3 overflow-y-auto"><div class="bg-white dark:bg-slate-800 w-full max-w-xl rounded-xl p-5 my-8 mx-auto space-y-3"><h2 class="text-lg font-bold">✈️ Gestisci volo</h2><form onsubmit="thaiSaveFlight(event)" class="grid sm:grid-cols-2 gap-3"><input id="thai-flight-route" type="hidden" value="Interno"><label class="text-sm font-medium">Compagnia<input id="thai-flight-company" type="text" class="thai-field w-full" ></label><label class="text-sm font-medium">Numero volo<input id="thai-flight-number" type="text" class="thai-field w-full" ></label><label class="text-sm font-medium">Data<input id="thai-flight-date" type="date" class="thai-field w-full" ></label><label class="text-sm font-medium">Aeroporto partenza<input id="thai-flight-from" type="text" class="thai-field w-full" required></label><label class="text-sm font-medium">Aeroporto arrivo<input id="thai-flight-to" type="text" class="thai-field w-full" required></label><label class="text-sm font-medium">Orario partenza<input id="thai-flight-depart" type="time" class="thai-field w-full" ></label><label class="text-sm font-medium">Orario arrivo<input id="thai-flight-arrive" type="time" class="thai-field w-full" ></label><label class="text-sm font-medium">Data arrivo<input id="thai-flight-arrivalDate" type="date" class="thai-field w-full"></label><label class="text-sm font-medium">Terminal partenza<input id="thai-flight-fromTerminal" type="text" class="thai-field w-full"></label><label class="text-sm font-medium">Terminal arrivo<input id="thai-flight-toTerminal" type="text" class="thai-field w-full"></label><label class="text-sm font-medium">Durata volo (es. 1h 20m)<input id="thai-flight-duration" type="text" class="thai-field w-full"></label><label class="text-sm font-medium">Bagaglio<input id="thai-flight-baggage" type="text" class="thai-field w-full"></label><label class="text-sm font-medium">Prezzo €<input id="thai-flight-price" type="number" min="0" step="0.01" class="thai-field w-full"></label><label class="text-sm font-medium">Pagato da<select id="thai-flight-paidBy" class="thai-field w-full"><option value="">Da definire</option><option value="Barbara">Barbara</option><option value="Laura">Laura</option></select></label><label class="text-sm font-medium">PNR prenotazione<input id="thai-flight-reference" type="text" class="thai-field w-full" ></label><label class="text-sm font-medium">Link biglietto<input id="thai-flight-link" type="text" class="thai-field w-full" ></label><label class="text-sm font-medium">Note<input id="thai-flight-notes" type="text" class="thai-field w-full" ></label><div class="sm:col-span-2 flex justify-end gap-2"><button type="button" onclick="thaiFlightModalClose()" class="thai-action">Annulla</button><button type="submit" class="thai-action">Salva volo</button></div></form></div></div>
     <div id="thai-backups-modal" class="hidden fixed inset-0 z-[90] bg-black/65 p-3 overflow-y-auto"><div class="bg-white dark:bg-slate-800 rounded-2xl p-5 max-w-xl mx-auto my-8 space-y-3"><h2 class="font-bold text-lg">🗂️ Backup del planner</h2><p class="text-xs opacity-75">Il ripristino sostituisce i dati attuali per entrambi i dispositivi. Prima viene conservato un backup della versione corrente.</p><div id="thai-backups-list"></div><button class="thai-action" onclick="document.getElementById('thai-backups-modal').classList.add('hidden')">Chiudi</button></div></div>
+
     <script>
         function thaiToggleTheme() {
             const dark = document.documentElement.classList.toggle('dark');
@@ -1062,7 +984,6 @@
 
         let tripData = { days: [], todos: [], notes: [], expenses: [], plannedExpenses: [], flights: [] };
 
-        // Funzione di formattazione importi con punto per migliaia e virgola per decimali (es. 2.295,00€)
         function formatEUR(amount) {
             const num = parseFloat(amount) || 0;
             const parts = num.toFixed(2).split('.');
@@ -1100,8 +1021,6 @@
             }
         }
 
-
-        // Fonte Frankfurter: cambio EUR/THB aggiornato ogni giorno, ultimo valore disponibile offline.
         const THAI_FX_CACHE='thai_fx_eur_thb_v2';
         let thaiFxStatus='cache',thaiFxFetching=false;
         function thaiExchangeRate(){
@@ -1159,17 +1078,13 @@
             document.querySelector(`[data-tab="${tabId}"]`).classList.add('active', 'bg-brand-50', 'text-brand-600', 'dark:bg-brand-900/30');
         }
 
-        /* --- GESTIONE MODALE SPESE --- */
         function closeExpenseModal() {
             document.getElementById('expense-modal').classList.add('hidden');
         }
 
-
-        /* THAI PLANNER 2 - estensioni basate su index-old.html */
         const THAI_STORAGE = 'thailandData2026_v5';
         const THAI_PENDING = 'thailandPending_v2';
         let thaiDirty = localStorage.getItem(THAI_PENDING) === '1';
-        // Un token temporaneo firmato dal backend ricorda l'accesso sul dispositivo.
         const THAI_SESSION_KEY='thaiPlannerSession_v1';
         const THAI_BASE_KEY='thaiPlannerSyncedBase_v1';
         let thaiToken=localStorage.getItem(THAI_SESSION_KEY)||'';
@@ -1229,8 +1144,6 @@
         let thaiSummaryDay = 0;
 
         const thaiEsc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-        // Gli URL senza https:// non devono diventare percorsi relativi di GitHub Pages.
-        // Per Google Maps accettiamo anche un nome/indirizzo e apriamo una ricerca Maps.
         function thaiUrl(value, isMap=false) {
             const raw = String(value ?? '').trim();
             if (!raw) return '';
@@ -1257,7 +1170,7 @@
             const href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(val);
             return `<a href="${thaiEsc(href)}" target="_blank" rel="noopener noreferrer" class="thai-hotel-map-link" aria-label="Apri indirizzo hotel su Google Maps">📍 ${thaiEsc(val)} <span aria-hidden="true">↗</span></a>`;
         };
-        const thaiBtn = (label, handler, cls='') => `<button type="button" onclick="${handler}" class="thai-action ${cls}">${label}</button>`;
+        const thaiBtn = (label, handler, cls='', title='') => `<button type="button" onclick="${handler}" class="thai-action ${cls}" ${title?`title="${thaiEsc(title)}"`:''}>${label}</button>`;
         const thaiValid = d => d && typeof d === 'object' && Array.isArray(d.days) && Array.isArray(d.todos) && Array.isArray(d.notes) && (d.expenses === undefined || Array.isArray(d.expenses)) && (d.plannedExpenses === undefined || Array.isArray(d.plannedExpenses)) && (d.flights === undefined || Array.isArray(d.flights));
         function thaiNormalize(d) {
             if (!Array.isArray(d.expenses)) d.expenses=[];
@@ -1310,17 +1223,12 @@
             clearTimeout(thaiSyncTimer);
             thaiSyncTimer=setTimeout(thaiSyncPending,350);
         }
-        // Fusione prudente a tre vie: elimina ambiguita solo se si puo stabilire
-        // senza dubbio quale elemento e' stato modificato. In caso contrario
-        // mantiene il blocco di conflitto, senza perdere dati.
         const THAI_SYNC_LISTS=['days','todos','notes','expenses','plannedExpenses','flights'];
         function thaiFingerprint(v){return JSON.stringify(v);}
         function thaiMergeArray(base,local,remote){
             if(thaiFingerprint(local)===thaiFingerprint(base))return remote;
             if(thaiFingerprint(remote)===thaiFingerprint(base))return local;
             if(thaiFingerprint(local)===thaiFingerprint(remote))return local;
-            // La fusione automatica sicura richiede array di soli append.
-            // Sulle liste modificate/riordinate/accorciate si richiede conferma.
             if(local.length<base.length || remote.length<base.length)return null;
             for(let i=0;i<base.length;i++){
                 if(thaiFingerprint(local[i])!==thaiFingerprint(base[i]) || thaiFingerprint(remote[i])!==thaiFingerprint(base[i]))return null;
@@ -1394,7 +1302,6 @@
         window.addEventListener('offline',thaiShowSync);
         document.addEventListener('visibilitychange',()=>{if(!document.hidden){thaiUpdateExchangeRate();if(thaiDirty)thaiSyncPending(); else fetchDataFromSheet();}});
 
-        // Modale condivisa: tutti i campi sono mantenuti in strutture compatibili con il vecchio JSON.
         const THAI_FIELDS = {
           day:[['date','Data / etichetta (es. 27 dic)','text'],['title','Titolo tappa','text',true],['notes','Note della giornata','textarea'],['transport_details','Vecchia descrizione trasporti (puoi cancellarla)','textarea'],['link','Link prenotazione','url'],['cost','Costo generico precedente (senza categoria; cancellabile)','text']],
           activity:[['title','Attività','text',true],['start','Ora inizio','time'],['end','Ora fine','time'],['desc','Descrizione / note','textarea'],['cost','Costo totale attività','number'],['costCurrency','Valuta del costo','select',false,['THB','EUR']],['maps','Link Google Maps','url'],['link','Altro link','url']],
@@ -1429,8 +1336,6 @@
             modal.querySelector('input,textarea,select')?.focus();
         }
         function closeThaiModal(){const m=document.getElementById('thai-modal');m.classList.add('hidden');m.classList.remove('flex');thaiContext=null;}
-        // Collega ogni attivita' a una sola previsione. Il budget rimane in EUR,
-        // mentre l'importo originale e il tasso di conversione sono conservati.
         function thaiActivityForecastSync(activity,day){
             const amt=activity.cost===''||activity.cost==null?0:Number(activity.cost);
             const currency=activity.costCurrency==='THB'?'THB':'EUR';
@@ -1441,7 +1346,6 @@
             const paidEntry=id?paid.find(x=>x._sourceId===id):null;
             if(!Number.isFinite(amt)||amt<0)return;
             if(paidEntry){
-                // Una previsione gia' pagata non deve ricomparire.
                 if(planIndex>=0)planned.splice(planIndex,1);
                 return;
             }
@@ -1462,7 +1366,7 @@
             if(existing>=0)planned[existing]={...planned[existing],...row};
             else planned.push(row);
         }
-        // Sincronizzazione automatica del costo hotel con il budget previsionale
+
         function thaiHotelForecastSync(hotel, day, dayIndex) {
             const amt = hotel.cost === '' || hotel.cost == null ? 0 : Number(hotel.cost);
             const id = hotel._budgetId;
@@ -1473,7 +1377,6 @@
 
             if (!Number.isFinite(amt) || amt < 0) return;
             
-            // Se la spesa è già stata segnata come pagata (spostata nelle effettive), non modifichiamo automaticamente
             if (paidEntry) {
                 if (planIndex >= 0) planned.splice(planIndex, 1);
                 return;
@@ -1584,23 +1487,41 @@
             renderApp();
         }
 
-        // Sposta hotel o singolo trasporto senza duplicare le prenotazioni.
+        // Sposta hotel, trasporti, singola attività o TUTTE le attività a un altro giorno
         let thaiMoveContext = null;
         function thaiOpenMove(kind, dayIndex, itemIndex=-1) {
             const source = tripData.days[dayIndex];
-            if (!source || !['hotel','transport'].includes(kind)) return;
+            if (!source || !['hotel','transport','activity','all_activities'].includes(kind)) return;
             if (kind === 'hotel' && !(source.hotel || source.link || source.cancellation || source.hotel_status === 'Prenotato')) return;
             if (kind === 'transport' && !(source.transports || [])[itemIndex]) return;
+            if (kind === 'activity' && !(source.activities || [])[itemIndex]) return;
+            if (kind === 'all_activities' && !(source.activities || []).length) return;
             if (tripData.days.length < 2) { alert('Aggiungi prima un altro giorno all’itinerario.'); return; }
-            const destinations=tripData.days.map((d,i)=>({d,i})).filter(x=>x.i!==dayIndex);
-            const select=document.getElementById('thai-move-destination');
-            select.innerHTML=destinations.map(({d,i})=>`<option value="${i}">Giorno ${thaiEsc(d.id||i+1)} · ${thaiEsc(d.date||'')} · ${thaiEsc(d.title||'Tappa')}</option>`).join('');
-            const label=kind==='hotel' ? (source.hotel?.name || 'Hotel') : thaiTransportLabel(source.transports[itemIndex]);
-            document.getElementById('thai-move-title').textContent=kind==='hotel'?'Sposta hotel':'Sposta spostamento';
-            document.getElementById('thai-move-description').textContent=label+' · dal giorno '+(source.date||source.id||dayIndex+1);
-            thaiMoveContext={kind,dayIndex,itemIndex};
-            const modal=document.getElementById('thai-move-modal');
-            modal.classList.remove('hidden');modal.classList.add('flex');select.focus();
+            
+            const destinations = tripData.days.map((d,i)=>({d,i})).filter(x=>x.i!==dayIndex);
+            const select = document.getElementById('thai-move-destination');
+            select.innerHTML = destinations.map(({d,i})=>`<option value="${i}">Giorno ${thaiEsc(d.id||i+1)} · ${thaiEsc(d.date||'')} · ${thaiEsc(d.title||'Tappa')}</option>`).join('');
+            
+            let label = '';
+            if (kind === 'hotel') label = source.hotel?.name || 'Hotel';
+            else if (kind === 'transport') label = thaiTransportLabel(source.transports[itemIndex]);
+            else if (kind === 'activity') label = source.activities[itemIndex]?.title || source.activities[itemIndex]?.desc || 'Attività';
+            else if (kind === 'all_activities') label = `${source.activities.length} attività del giorno`;
+
+            const titles = {
+                hotel: 'Sposta hotel',
+                transport: 'Sposta spostamento',
+                activity: 'Sposta attività',
+                all_activities: 'Sposta tutte le attività'
+            };
+            document.getElementById('thai-move-title').textContent = titles[kind];
+            document.getElementById('thai-move-description').textContent = label + ' · dal giorno ' + (source.date || source.id || dayIndex+1);
+            
+            thaiMoveContext = {kind, dayIndex, itemIndex};
+            const modal = document.getElementById('thai-move-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            select.focus();
         }
         function thaiCloseMove() {
             const modal=document.getElementById('thai-move-modal');
@@ -1613,36 +1534,51 @@
         }
         function thaiConfirmMove(event) {
             event.preventDefault();
-            if(!thaiMoveContext)return;
-            const {kind,dayIndex,itemIndex}=thaiMoveContext;
-            const to=Number(document.getElementById('thai-move-destination').value);
-            if(!Number.isInteger(to) || to<0 || to>=tripData.days.length || to===dayIndex)return;
-            const source=tripData.days[dayIndex], target=tripData.days[to];
+            if(!thaiMoveContext) return;
+            const {kind, dayIndex, itemIndex} = thaiMoveContext;
+            const to = Number(document.getElementById('thai-move-destination').value);
+            if(!Number.isInteger(to) || to<0 || to>=tripData.days.length || to===dayIndex) return;
+            const source = tripData.days[dayIndex], target = tripData.days[to];
+
             if(kind==='hotel') {
                 if(target.hotel || target.link || target.cancellation || target.hotel_status==='Prenotato') {
                     alert('Il giorno scelto ha già un hotel. Spostalo o eliminalo prima per evitare sovrascritture.');
                     return;
                 }
-                if(source.hotel)target.hotel=source.hotel;
+                if(source.hotel) target.hotel = source.hotel;
                 for(const key of ['hotel_status','cancellation','link']) {
-                    if(source[key]!==undefined) target[key]=source[key];
+                    if(source[key]!==undefined) target[key] = source[key];
                     delete source[key];
                 }
                 delete source.hotel;
-            } else {
-                const moved=source.transports.splice(itemIndex,1)[0];
-                if(!moved)return;
-                if(!Array.isArray(target.transports))target.transports=[];
+            } else if(kind==='transport') {
+                const moved = source.transports.splice(itemIndex,1)[0];
+                if(!moved) return;
+                if(!Array.isArray(target.transports)) target.transports = [];
                 target.transports.push(moved);
                 thaiRecomputeTransportStatus(source);
                 thaiRecomputeTransportStatus(target);
+            } else if(kind==='activity') {
+                const moved = source.activities.splice(itemIndex,1)[0];
+                if(!moved) return;
+                if(!Array.isArray(target.activities)) target.activities = [];
+                target.activities.push(moved);
+                thaiActivityForecastSync(moved, target);
+            } else if(kind==='all_activities') {
+                const movedList = source.activities.splice(0, source.activities.length);
+                if(!Array.isArray(target.activities)) target.activities = [];
+                movedList.forEach(act => {
+                    target.activities.push(act);
+                    thaiActivityForecastSync(act, target);
+                });
             }
+
             thaiCloseMove();
-            saveDataToSheet();renderApp();
+            saveDataToSheet();
+            renderApp();
         }
         function openTodoModal(i=-1){thaiOpen('todo',-1,i);}
         function openNoteModal(i=-1){thaiOpen('note',-1,i);}
-        // Alias delle vecchie azioni per non interrompere gli onclick esistenti.
         function addActivityPrompt(d){openActivityModal(d);}
         function editActivityPrompt(d,a){openActivityModal(d,a);}
         function addTodoPrompt(){openTodoModal();}
@@ -1670,8 +1606,6 @@
         function deleteExpense(i){thaiDelete('expense',0,i);}
         function thaiTransportLabel(t){return `${thaiEsc(t.type||'Trasporto')} · ${thaiEsc(t.from||'?')} → ${thaiEsc(t.to||'?')}`;}
 
-        // Le prenotazioni restano salvate una sola volta nel giorno di origine.
-        // Gli altri giorni visualizzano automaticamente il soggiorno secondo le date.
         function thaiDateKey(value, defaultYear=2026) {
             if(!value) return null;
             const raw=String(value).trim().toLowerCase();
@@ -1685,14 +1619,11 @@
             else if(named){d=Number(named[1]);m=months[named[2].slice(0,3)];y=named[3]?Number(named[3]):defaultYear;}
             else return null;
             if(y<100)y+=2000;
-            // Il viaggio attraversa Capodanno: gennaio = 2027 se l'anno non è indicato.
             if(!iso && !(numeric && numeric[3]) && !(named && named[3]) && m<=2 && defaultYear===2026) y=2027;
             const ms=Date.UTC(y,m-1,d);
             const check=new Date(ms);
             return check.getUTCFullYear()===y && check.getUTCMonth()===m-1 && check.getUTCDate()===d ? ms : null;
         }
-        // Ogni giornata puo' contenere piu' eventi hotel: check-out precedente,
-        // soggiorno in corso e check-in nuovo. Non scegliere mai un solo hotel.
         function thaiHotelStaysForDay(dayIndex) {
             const days=tripData.days||[];
             const current=days[dayIndex];
@@ -1713,7 +1644,6 @@
                     results.push({sourceIndex:i,hotel,checkout:false});
                 }
             }
-            // Check-out prima del check-in, senza nascondere nessuna prenotazione.
             return results.sort((x,y)=>Number(y.checkout)-Number(x.checkout));
         }
         function thaiHotelStayForDay(dayIndex) {
@@ -1783,7 +1713,10 @@
                   ${d.cost?`<div class="thai-legacy text-xs"><div class="flex flex-wrap items-center justify-between gap-2"><b>💶 Importo del vecchio itinerario: ${thaiEsc(d.cost)}</b><div class="flex gap-1">${thaiBtn('✏️ Modifica',`openDayModal(${i})`)}${thaiBtn('Rimuovi',`thaiClearLegacy(${i},'cost')`)}</div></div><p class="thai-help">È un valore generico importato: non è stato attribuito a hotel, trasporti o budget. Se è una spesa reale, registrala in Budget & Costi, poi rimuovi questo valore.</p></div>`:''}
                   ${d.notes?`<div class="text-xs bg-slate-50 dark:bg-slate-700/30 rounded-xl p-3 space-y-1"><p>📝 Note giornata: ${thaiEsc(d.notes)}</p></div>`:''}
                   
-                  <div class="space-y-2">${activities.map(({a,j})=>`<div class="activity-detail bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-xs flex justify-between gap-2"><div class="min-w-0"><p class="font-semibold">${a.start?`<span class="text-brand-600">${thaiEsc(a.start)}${a.end?'–'+thaiEsc(a.end):''} · </span>`:''}${thaiEsc(a.title||a.desc||'Attività')}</p>${a.desc&&a.title?`<p class="mt-1 whitespace-pre-wrap">${thaiEsc(a.desc)}</p>`:''}${thaiActivityCostText(a)}<div class="flex gap-3 mt-1">${thaiLink(a.maps,'Google Maps')} ${thaiLink(a.link,'Apri link')}</div></div><div class="flex gap-1 items-start">${thaiBtn('✏️',`openActivityModal(${i},${j})`)}${thaiBtn('🗑️',`deleteActivity(${i},${j})`)}</div></div>`).join('')||'<p class="text-xs text-slate-400">Nessuna attività aggiunta.</p>'}</div>
+                  <div class="space-y-2">
+                    ${activities.length > 1 ? `<div class="flex justify-end">${thaiBtn('↔️ Sposta tutte le attività',`thaiOpenMove('all_activities',${i})`,'','Sposta tutte le attività di questo giorno in un altro')}</div>` : ''}
+                    ${activities.map(({a,j})=>`<div class="activity-detail bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-xs flex justify-between gap-2"><div class="min-w-0"><p class="font-semibold">${a.start?`<span class="text-brand-600">${thaiEsc(a.start)}${a.end?'–'+thaiEsc(a.end):''} · </span>`:''}${thaiEsc(a.title||a.desc||'Attività')}</p>${a.desc&&a.title?`<p class="mt-1 whitespace-pre-wrap">${thaiEsc(a.desc)}</p>`:''}${thaiActivityCostText(a)}<div class="flex gap-3 mt-1">${thaiLink(a.maps,'Google Maps')} ${thaiLink(a.link,'Apri link')}</div></div><div class="flex gap-1 items-start">${thaiBtn('↔️',`thaiOpenMove('activity',${i},${j})`,'','Sposta questa attività in un altro giorno')}${thaiBtn('✏️',`openActivityModal(${i},${j})`)}${thaiBtn('🗑️',`deleteActivity(${i},${j})`)}</div></div>`).join('')||'<p class="text-xs text-slate-400">Nessuna attività aggiunta.</p>'}
+                  </div>
                   ${thaiBtn('+ Aggiungi attività',`openActivityModal(${i})`)}
                 </article>`;
             }).join('');
@@ -1805,92 +1738,48 @@
             </div>`).join('')||'<p class="text-sm opacity-75 p-3">Nessuna attività da fare. Aggiungi la prima!</p>';
         }
         
-function renderNotes() {
-    const container = document.getElementById('notes-container');
-    if (!container) return;
+        function renderNotes() {
+            const container = document.getElementById('notes-container');
+            if (!container) return;
 
-    const notes = tripData.notes || [];
+            const notes = tripData.notes || [];
 
-    container.innerHTML = notes.map((n, i) => {
-        const url = thaiUrl(n.link);
-        const shown = String(n.link || '').trim();
+            container.innerHTML = notes.map((n, i) => {
+                const url = thaiUrl(n.link);
+                const shown = String(n.link || '').trim();
 
-        const linked = url
-            ? `<a href="${thaiEsc(url)}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-brand-600 dark:text-teal-200 underline break-all inline-block py-1"
-                  title="Apri il collegamento esterno">
-                  ${thaiEsc(shown)} ↗
-               </a>`
-            : '';
+                const linked = url
+                    ? `<a href="${thaiEsc(url)}" target="_blank" rel="noopener noreferrer" class="text-brand-600 dark:text-teal-200 underline break-all inline-block py-1" title="Apri il collegamento esterno">${thaiEsc(shown)} ↗</a>`
+                    : '';
 
-        return `
-          <article class="thai-note-card bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-900 rounded-xl p-3 text-sm space-y-2">
-
-            <div class="flex items-start gap-2">
-
-              <span class="note-drag-handle"
-                    title="Trascina per riordinare"
-                    aria-label="Trascina per riordinare">
-                ☷
-              </span>
-
-              <strong class="flex-1 min-w-0 text-sky-900 dark:text-sky-100 font-bold break-words">
-                ${thaiEsc(n.title || 'Nota')}
-              </strong>
-
-              <div class="thai-note-actions flex gap-1 shrink-0">
-
-                <button type="button"
-                        class="thai-note-order-btn"
-                        onclick="thaiMoveNote(${i}, -1)"
-                        ${i === 0 ? 'disabled' : ''}
-                        title="Sposta in alto"
-                        aria-label="Sposta nota in alto">
-                  ↑
-                </button>
-
-                <button type="button"
-                        class="thai-note-order-btn"
-                        onclick="thaiMoveNote(${i}, 1)"
-                        ${i === notes.length - 1 ? 'disabled' : ''}
-                        title="Sposta in basso"
-                        aria-label="Sposta nota in basso">
-                  ↓
-                </button>
-
-                ${thaiBtn('✏️', `openNoteModal(${i})`)}
-                ${thaiBtn('🗑️', `deleteNote(${i})`)}
-
-              </div>
-            </div>
-
-            ${n.text
-                ? `<p class="whitespace-pre-wrap break-words text-slate-800 dark:text-slate-100">${thaiEsc(n.text)}</p>`
-                : ''}
-
-            ${linked}
-
-          </article>
-        `;
-    }).join('') || '<p class="text-sm text-slate-400">Nessuna nota.</p>';
-}
+                return `
+                  <article class="thai-note-card bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-900 rounded-xl p-3 text-sm space-y-2">
+                    <div class="flex items-start gap-2">
+                      <span class="note-drag-handle" title="Trascina per riordinare" aria-label="Trascina per riordinare">☷</span>
+                      <strong class="flex-1 min-w-0 text-sky-900 dark:text-sky-100 font-bold break-words">${thaiEsc(n.title || 'Nota')}</strong>
+                      <div class="thai-note-actions flex gap-1 shrink-0">
+                        <button type="button" class="thai-note-order-btn" onclick="thaiMoveNote(${i}, -1)" ${i === 0 ? 'disabled' : ''} title="Sposta in alto" aria-label="Sposta nota in alto">↑</button>
+                        <button type="button" class="thai-note-order-btn" onclick="thaiMoveNote(${i}, 1)" ${i === notes.length - 1 ? 'disabled' : ''} title="Sposta in basso" aria-label="Sposta nota in basso">↓</button>
+                        ${thaiBtn('✏️', `openNoteModal(${i})`)}
+                        ${thaiBtn('🗑️', `deleteNote(${i})`)}
+                      </div>
+                    </div>
+                    ${n.text ? `<p class="whitespace-pre-wrap break-words text-slate-800 dark:text-slate-100">${thaiEsc(n.text)}</p>` : ''}
+                    ${linked}
+                  </article>
+                `;
+            }).join('') || '<p class="text-sm text-slate-400">Nessuna nota.</p>';
+        }
         
-function thaiMoveNote(index, direction) {
-    const notes = tripData.notes || [];
-    const target = index + direction;
-
-    if (index < 0 || target < 0 || target >= notes.length) {
-        return;
-    }
-
-    const moved = notes.splice(index, 1)[0];
-    notes.splice(target, 0, moved);
-
-    saveDataToSheet();
-    renderApp();
-}
+        function thaiMoveNote(index, direction) {
+            const notes = tripData.notes || [];
+            const target = index + direction;
+            if (index < 0 || target < 0 || target >= notes.length) return;
+            const moved = notes.splice(index, 1)[0];
+            notes.splice(target, 0, moved);
+            saveDataToSheet();
+            renderApp();
+        }
 
         function thaiExpenseIcon(category){
             return ({'Hotel':'🏨','Cibo':'🍜','Trasporti':'🚆','Attività':'🎟️','Shopping':'🛍️','Altro':'🧾'})[category||'Altro'] || '🧾';
@@ -2051,39 +1940,28 @@ function thaiMoveNote(index, direction) {
                 saveDataToSheet();renderApp();
             }});
             
-const notesContainer = document.getElementById('notes-container');
-
-if (thaiNotesSortable) {
-    thaiNotesSortable.destroy();
-    thaiNotesSortable = null;
-}
-
-if (notesContainer) {
-    thaiNotesSortable = new Sortable(notesContainer, {
-        draggable: '.thai-note-card',
-        handle: '.note-drag-handle',
-        animation: 150,
-        delayOnTouchOnly: true,
-        delay: 120,
-        touchStartThreshold: 5,
-
-        onEnd: evt => {
-            if (
-                evt.oldIndex === evt.newIndex ||
-                evt.oldIndex == null ||
-                evt.newIndex == null
-            ) {
-                return;
+            const notesContainer = document.getElementById('notes-container');
+            if (thaiNotesSortable) {
+                thaiNotesSortable.destroy();
+                thaiNotesSortable = null;
             }
-
-            const moved = tripData.notes.splice(evt.oldIndex, 1)[0];
-            tripData.notes.splice(evt.newIndex, 0, moved);
-
-            saveDataToSheet();
-            renderApp();
-        }
-    });
-}
+            if (notesContainer) {
+                thaiNotesSortable = new Sortable(notesContainer, {
+                    draggable: '.thai-note-card',
+                    handle: '.note-drag-handle',
+                    animation: 150,
+                    delayOnTouchOnly: true,
+                    delay: 120,
+                    touchStartThreshold: 5,
+                    onEnd: evt => {
+                        if (evt.oldIndex === evt.newIndex || evt.oldIndex == null || evt.newIndex == null) return;
+                        const moved = tripData.notes.splice(evt.oldIndex, 1)[0];
+                        tripData.notes.splice(evt.newIndex, 0, moved);
+                        saveDataToSheet();
+                        renderApp();
+                    }
+                });
+            }
         }
         async function exportJSONData(){
             const raw=JSON.stringify(tripData,null,2);
@@ -2097,7 +1975,6 @@ if (notesContainer) {
                 tripData=thaiNormalize(d);thaiConflict=false;saveDataToSheet();renderApp();alert('Dati importati localmente. Controlla lo stato di sincronizzazione prima di chiudere.');
             }catch(e){alert('JSON non valido: '+e.message);}
         }
-        // In caso di conflitto preserviamo il JSON locale per un ripristino manuale.
         async function thaiRefresh(){
             if(thaiDirty) {
                 if(thaiConflict) { thaiShowSync(); return; }
@@ -2107,19 +1984,14 @@ if (notesContainer) {
             await fetchDataFromSheet();
         }
 
-        // Pull-to-refresh: si attiva solo da inizio pagina e solo su schermi mobili.
-        // Se ci sono modifiche locali, tenta prima di sincronizzarle senza sovrascriverle.
         (function thaiInstallPullToRefresh(){
             const indicator = document.getElementById('thai-pull-indicator');
             if (!indicator) return;
             const threshold = 76;
             let startY = 0, startX = 0, distance = 0;
             let tracking = false, refreshing = false;
-            const atPageTop = () => window.scrollY <= 2 &&
-                document.documentElement.scrollTop <= 2;
-            const modalVisible = () =>
-                !document.getElementById('thai-modal')?.classList.contains('hidden') ||
-                !document.getElementById('expense-modal')?.classList.contains('hidden');
+            const atPageTop = () => window.scrollY <= 2 && document.documentElement.scrollTop <= 2;
+            const modalVisible = () => !document.getElementById('thai-modal')?.classList.contains('hidden') || !document.getElementById('expense-modal')?.classList.contains('hidden');
             function show(distance, message){
                 indicator.textContent = message;
                 indicator.style.opacity = '1';
@@ -2131,12 +2003,8 @@ if (notesContainer) {
             }
             document.addEventListener('touchstart', function(e){
                 tracking = false; distance = 0;
-                if (refreshing || e.touches.length !== 1 ||
-                    window.innerWidth >= 768 || !atPageTop() || modalVisible() ||
-                    e.target.closest('input,textarea,select,[contenteditable="true"],.thai-modal-panel')) return;
-                startY = e.touches[0].clientY;
-                startX = e.touches[0].clientX;
-                tracking = true;
+                if (refreshing || e.touches.length !== 1 || window.innerWidth >= 768 || !atPageTop() || modalVisible() || e.target.closest('input,textarea,select,[contenteditable="true"],.thai-modal-panel')) return;
+                startY = e.touches[0].clientY; startX = e.touches[0].clientX; tracking = true;
             }, {passive:true});
             document.addEventListener('touchmove', function(e){
                 if (!tracking || refreshing || e.touches.length !== 1) return;
@@ -2151,13 +2019,13 @@ if (notesContainer) {
                 if (!tracking) return;
                 tracking = false;
                 if (distance < threshold || refreshing) { hide(); return; }
-                refreshing = true;
-                show(95, '↻ Aggiornamento...');
+                refreshing = true; show(95, '↻ Aggiornamento...');
                 try { await thaiRefresh(); }
                 finally { refreshing = false; distance = 0; hide(); }
             }, {passive:true});
             document.addEventListener('touchcancel', function(){tracking=false;distance=0;hide();}, {passive:true});
         })();
+
         let thaiConflictRemote=null;
         const THAI_MERGE_FIELDS=[['days','Itinerario, hotel e trasporti'],['todos','To Do'],['notes','Note'],['expenses','Spese pagate'],['plannedExpenses','Spese future previste'],['flights','Voli']];
         async function thaiResolveConflict(){
@@ -2200,9 +2068,6 @@ if (notesContainer) {
             return Promise.resolve();
         }
 
-
-
-        // Collassi UI: preferenze locali al dispositivo, non al database condiviso.
         const THAI_FOLDS_KEY='thai_planner_fold_preferences_v1';
         let thaiFoldChoices={};
         try{thaiFoldChoices=JSON.parse(localStorage.getItem(THAI_FOLDS_KEY)||'{}')||{};}catch(e){thaiFoldChoices={};}
@@ -2251,7 +2116,6 @@ if (notesContainer) {
         }
         function thaiInstallFolds(){
             document.querySelectorAll('#days-container > .day-card').forEach((card,i)=>{
-                // Collassi separati per hotel, trasporti, attività; individuati nel DOM della giornata.
                 const day=tripData.days[i]||{};
                 const key='day:'+String(day.id||i);
                 const hotel=card.querySelector('.hotel-detail');
@@ -2260,10 +2124,8 @@ if (notesContainer) {
                 if(transport)thaiWrapFold(transport,key+':transports','🚆 Spostamenti');
                 const activities=card.querySelector('.activity-detail')?.parentElement;
                 if(activities)thaiWrapFold(activities,key+':activities','🗓️ Attività');
-                // Il comando principale collassa l'intera giornata.
                 thaiDayFold(card,key);
             });
-            // Pannelli statici; aggiornamenti delle card rimangono compatibili con i render successivi.
             const flight=document.querySelector('.flight-card');
             if(flight)thaiWrapFold(flight,'flights','✈️ Voli');
             const travellers=document.querySelector('.travellers-card');
@@ -2279,8 +2141,6 @@ if (notesContainer) {
                 const personal=budget.querySelector('section[aria-label="Quanto costa il viaggio a persona"]');
                 if(personal)thaiWrapFold(personal,'budget:personal','💳 Spesa a persona');
             }
-            // Le note sono sempre leggibili: nessun Comprimi/Espandi sulle singole note.
-            // To Do volutamente compatti: non aggiungere un pannello Comprimi per ogni voce.
             document.querySelectorAll('#expenses-list > .thai-expense-card').forEach(node=>{
                 const key=node.dataset.thaiFoldKey;
                 const body=node.querySelector('.thai-fold-body');
@@ -2307,7 +2167,6 @@ if (notesContainer) {
             thaiRememberFolds();
         }
 
-        /* Versione finale: voli in database, ripristino, budget collegato e vista Oggi */
         let thaiFlightEditIndex=-1;
         function thaiEditingVisible(){return ['thai-modal','expense-modal','thai-forecast-modal','thai-flight-modal','thai-backups-modal','thai-conflict-modal'].some(id=>{const e=document.getElementById(id);return e&&!e.classList.contains('hidden');}) || !!document.activeElement?.closest('input,textarea,select,[contenteditable="true"]');}
         function thaiFlightModalClose(){const m=document.getElementById('thai-flight-modal');m.classList.add('hidden');m.classList.remove('flex');}
@@ -2325,8 +2184,6 @@ if (notesContainer) {
             const m=x.match(/^(\d{1,2})\s*(?:[\/-]|\s+)\s*(\d{1,2}|gen(?:naio)?|feb(?:braio)?|mar(?:zo)?|apr(?:ile)?|mag(?:gio)?|giu(?:gno)?|lug(?:lio)?|ago(?:sto)?|set(?:tembre)?|ott(?:obre)?|nov(?:embre)?|dic(?:embre)?)\s*(?:[\/-]|\s+)?\s*(\d{4})?$/i);
             if(!m)return '';
             const months=['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];const mo=/^\d+$/.test(m[2])?Number(m[2]):months.findIndex(x=>m[2].toLowerCase().startsWith(x))+1;
-            // Itinerario 26 dicembre 2026 - 11 gennaio 2027: l'anno omesso
-            // sulle date di gennaio appartiene al 2027, non al 2026.
             if(!(mo>=1&&mo<=12))return '';
             const year=m[3]||String(mo<=1?2027:2026);
             return `${year}-${String(mo).padStart(2,'0')}-${m[1].padStart(2,'0')}`;
@@ -2337,8 +2194,6 @@ if (notesContainer) {
             const days=tripData.days||[];
             const exact=days.findIndex(d=>thaiDateAsISO(d.date)===iso);
             if(exact>=0)return exact;
-            // Se il vecchio itinerario non riporta l'anno, confrontiamo
-            // giorno e mese soltanto quando esiste una sola corrispondenza.
             const sameDay=days.map((d,i)=>({date:thaiDateAsISO(d.date),i})).filter(x=>x.date&&x.date.slice(5)===iso.slice(5));
             return sameDay.length===1?sameDay[0].i:-1;
         }
